@@ -174,6 +174,12 @@
   --font-sans: var(--sans-active), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, 'SF Mono', Menlo, monospace;
 
+  /* The wordmark is a fixed object and never changes face. `font-display`
+     resolves to Noto Naskh on Arabic pages, which has Latin glyphs of its own —
+     so "YNWA" would quietly be set in a different serif on /ar. This token
+     pins it to Newsreader in every locale. */
+  --font-wordmark: var(--font-newsreader), Georgia, 'Times New Roman', serif;
+
   /* --- space ------------------------------------------------------------ */
   /* 4px base: p-6 = 24px, py-24 = 96px, py-40 = 160px. */
   --spacing: 0.25rem;
@@ -432,6 +438,246 @@
     display: block;
   }
   :root[data-resolved='dark'] .theme-when-light {
+    display: none;
+  }
+}
+
+/* =============================================================================
+   Splash
+
+   YNWA  ->  You'll Never Walk Alone  ->  You'll Never Work Alone
+
+   Every step below is a CSS animation on server-rendered markup, so the reveal
+   is already running before any JavaScript arrives and completes on time even
+   if none ever does. React only records that the tab has seen it, removes the
+   node afterwards, and handles skipping.
+
+  Timeline (ms). --sp-total must match SPLASH_TOTAL in lib/theme.ts.
+    120  outer diamond draws
+    540  inner diamond draws
+    1020  centre square lands
+    1260  YNWA rises
+    1980  the four words unfurl, 84ms apart, tracking tightens
+    3300  a -> o, then l -> r
+    3780  subline
+    4680  overlay lifts
+    5340  gone
+   ========================================================================== */
+
+.splash {
+  --sp-total: 5340ms;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background-color: var(--color-ground);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  animation: splash-out 660ms var(--ease-institutional) 4680ms forwards;
+}
+
+/* Seen already this session — the pre-paint script sets this, so a repeat
+   visitor never sees a frame of it. */
+:root[data-splash='skip'] .splash {
+  display: none;
+}
+
+/* Skipped by a key or a click. */
+.splash[data-dismissed] {
+  animation: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms linear;
+}
+
+.splash-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  text-align: center;
+}
+
+/* --- the mark draws itself ------------------------------------------------ */
+.splash-mark {
+  width: 64px;
+  height: 64px;
+  color: var(--color-accent-text);
+}
+.splash-mark .sm-outer,
+.splash-mark .sm-inner {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+.splash-mark .sm-outer {
+  animation: splash-draw 720ms var(--ease-institutional) 120ms forwards;
+}
+.splash-mark .sm-inner {
+  animation: splash-draw 600ms var(--ease-institutional) 540ms forwards;
+}
+.splash-mark .sm-core {
+  transform-origin: 16px 16px;
+  transform: scale(0);
+  opacity: 0;
+  animation: splash-core 360ms var(--ease-institutional) 1020ms forwards;
+}
+
+/* --- the wordmark opens into the sentence --------------------------------- */
+.splash-words {
+  margin: 0;
+  display: flex;
+  align-items: flex-end;
+  column-gap: 0;
+  font-family: var(--font-wordmark);
+  font-weight: 400;
+  font-size: clamp(2rem, 1.2rem + 3.2vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: 0.16em;
+  color: var(--color-fg);
+  opacity: 0;
+  transform: translateY(10px);
+  animation:
+    splash-rise 600ms var(--ease-institutional) 1260ms forwards,
+    splash-open 960ms var(--ease-institutional) 1980ms forwards;
+}
+
+.sw {
+  display: inline-flex;
+  align-items: flex-end;
+}
+.si,
+.st {
+  display: block;
+  line-height: 1;
+}
+
+/* The tail of each word grows from nothing, which is what makes the line
+   expand outward from the wordmark rather than being swapped for it.
+   The padding/negative-margin pair gives `overflow: hidden` vertical room, so
+   it clips horizontally without shaving the ascenders off `ll` and `k`. */
+.st {
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  padding-block: 0.4em;
+  margin-block: -0.4em;
+  animation: splash-unfurl 840ms var(--ease-institutional) calc(1980ms + var(--i) * 84ms)
+    forwards;
+}
+
+/* --- a -> o, l -> r ------------------------------------------------------- */
+/* The replacement is positioned out of flow, so the swap cannot nudge the `k`
+   even though `r` is wider than `l`. */
+.swap {
+  position: relative;
+  display: inline-block;
+}
+.swap .from {
+  display: inline-block;
+  animation: swap-out 500ms var(--ease-institutional) 3300ms forwards;
+}
+.swap .to {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  opacity: 0;
+  color: var(--color-accent-text);
+  animation: swap-in 650ms ease-in-out 3300ms forwards;
+}
+.swap-late .from,
+.swap-late .to {
+  animation-delay: 3408ms;
+}
+
+/* --- subline and skip hint ------------------------------------------------ */
+.splash-sub {
+  margin: 0;
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  color: var(--color-fg-60);
+  opacity: 0;
+  animation: splash-rise 540ms var(--ease-institutional) 3780ms forwards;
+}
+
+.splash-skip {
+  position: absolute;
+  inset-block-end: 28px;
+  inset-inline: 0;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--color-fg-40);
+  opacity: 0;
+  animation: splash-rise 480ms var(--ease-institutional) 1680ms forwards;
+}
+:lang(ar) .splash-skip {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* --- keyframes ------------------------------------------------------------ */
+@keyframes splash-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes splash-core {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes splash-rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes splash-open {
+  to {
+    letter-spacing: 0.02em;
+    column-gap: 0.3em;
+  }
+}
+@keyframes splash-unfurl {
+  to {
+    max-width: 2.4em;
+    opacity: 1;
+  }
+}
+@keyframes swap-out {
+  to {
+    opacity: 0;
+    transform: translateY(-0.28em);
+  }
+}
+@keyframes swap-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.28em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes splash-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* A four-second animation is exactly what reduced motion is asking not to see.
+   No JavaScript involved: it is never rendered for them. */
+@media (prefers-reduced-motion: reduce) {
+  .splash {
     display: none;
   }
 }
