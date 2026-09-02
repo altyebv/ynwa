@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "siteName": "YNWA",
+    "titleTemplate": "%s · YNWA",
+    "defaultTitle": "YNWA — Company formation, PRO and corporate services in Qatar",
+    "defaultDescription": "YNWA is a Doha-based business services firm handling company formation, licensing, PRO and government processes, and ongoing corporate compliance in Qatar."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "qatar": "Doing business in Qatar",
+    "about": "About",
+    "insights": "Insights",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "servicesOverview": "All services",
+    "servicesOverviewDescription": "The three stages of a company's life in Qatar, and what we handle at each."
+  },
+  "stages": {
+    "start": "Start",
+    "startDescription": "Establishing a new company in Qatar",
+    "operate": "Operate",
+    "operateDescription": "Keeping an existing company compliant and running",
+    "grow": "Grow",
+    "growDescription": "Structuring, protecting and expanding what you have built"
+  },
+  "categories": {
+    "companyFormation": "Company formation",
+    "companyFormationSummary": "Entity selection, commercial registration, municipality licensing, QFC and free zone routes, foreign branches.",
+    "proServices": "PRO & government services",
+    "proServicesSummary": "Licence renewals and amendments, labour and immigration files, document attestation, activity and partner changes.",
+    "corporateServices": "Corporate services",
+    "corporateServicesSummary": "Corporate structuring, holding companies and joint ventures, trademark registration, ongoing compliance."
+  },
+  "cta": {
+    "primary": "Start your business",
+    "secondary": "Talk to an expert",
+    "contact": "Get in touch",
+    "callOffice": "Call the office",
+    "viewServices": "View services"
+  },
+  "hero": {
+    "eyebrow": "Doha, Qatar",
+    "headline": "Start, operate, and grow your company in Qatar.",
+    "lede": "YNWA handles formation, licensing, PRO and government processes — so your time goes to the business, not the paperwork."
+  },
+  "footer": {
+    "address": "Office",
+    "contact": "Contact",
+    "hours": "Hours",
+    "hoursValue": "Sunday to Thursday, 09:00 – 17:00",
+    "explore": "Explore",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "rights": "All rights reserved.",
+    "disclaimer": "YNWA provides administrative, licensing and government-process services. It does not provide legal advice."
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mainNavigation": "Main",
+    "footerNavigation": "Footer",
+    "changeLanguage": "Change language",
+    "currentLanguage": "Current language",
+    "homeLink": "YNWA — home",
+    "switchToDark": "Switch to dark theme",
+    "switchToLight": "Switch to light theme"
+  },
+  "scaffold": {
+    "notice": "Phase A scaffold",
+    "body": "The shell, the design tokens and bilingual routing are in place. Page content lands in phase C."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "That page does not exist, or it has moved.",
+    "action": "Back to home"
+  }
+}

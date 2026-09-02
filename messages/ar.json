@@ -1,0 +1,81 @@
+{
+  "_review": "Arabic written for a Qatari/Gulf business audience, not translated mechanically from the English. Every string here still needs sign-off from a native reviewer inside the business before launch — see open question 09.",
+  "meta": {
+    "siteName": "YNWA",
+    "titleTemplate": "%s · YNWA",
+    "defaultTitle": "YNWA — تأسيس الشركات وخدمات العلاقات الحكومية والخدمات المؤسسية في قطر",
+    "defaultDescription": "شركة خدمات أعمال مقرّها الدوحة، تتولّى تأسيس الشركات والتراخيص وإجراءات العلاقات الحكومية والامتثال المؤسسي المستمر في قطر."
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "services": "الخدمات",
+    "qatar": "الأعمال في قطر",
+    "about": "عن الشركة",
+    "insights": "مقالات",
+    "faq": "الأسئلة الشائعة",
+    "contact": "تواصل معنا",
+    "servicesOverview": "جميع الخدمات",
+    "servicesOverviewDescription": "مراحل حياة الشركة في قطر، وما نتولّاه في كل مرحلة."
+  },
+  "stages": {
+    "start": "التأسيس",
+    "startDescription": "تأسيس شركة جديدة في قطر",
+    "operate": "التشغيل",
+    "operateDescription": "إبقاء الشركة القائمة ملتزمة ومستمرة في عملها",
+    "grow": "النمو",
+    "growDescription": "هيكلة ما بنيته وحمايته وتوسيعه"
+  },
+  "categories": {
+    "companyFormation": "تأسيس الشركات",
+    "companyFormationSummary": "اختيار الكيان القانوني، والسجل التجاري، ورخصة البلدية، ومسارات مركز قطر للمال والمناطق الحرة، وفروع الشركات الأجنبية.",
+    "proServices": "خدمات العلاقات الحكومية",
+    "proServicesSummary": "تجديد التراخيص وتعديلها، ومعاملات العمل والهجرة، وتصديق المستندات، وتعديل الأنشطة والشركاء.",
+    "corporateServices": "الخدمات المؤسسية",
+    "corporateServicesSummary": "الهيكلة المؤسسية، والشركات القابضة والمشاريع المشتركة، وتسجيل العلامات التجارية، والامتثال المستمر."
+  },
+  "cta": {
+    "primary": "ابدأ مشروعك",
+    "secondary": "تحدّث إلى مختص",
+    "contact": "تواصل معنا",
+    "callOffice": "اتصل بالمكتب",
+    "viewServices": "استعرض الخدمات"
+  },
+  "hero": {
+    "eyebrow": "الدوحة، قطر",
+    "headline": "تأسيس شركتك في قطر، وتشغيلها، وتنميتها.",
+    "lede": "تتولّى YNWA إجراءات التأسيس والتراخيص وخدمات العلاقات الحكومية، ليبقى وقتك لعملك لا للمعاملات."
+  },
+  "footer": {
+    "address": "المكتب",
+    "contact": "للتواصل",
+    "hours": "أوقات العمل",
+    "hoursValue": "الأحد إلى الخميس، 09:00 – 17:00",
+    "explore": "تصفّح",
+    "legal": "قانوني",
+    "privacy": "الخصوصية",
+    "terms": "الشروط",
+    "rights": "جميع الحقوق محفوظة.",
+    "disclaimer": "تقدّم YNWA خدمات إدارية وخدمات ترخيص وإجراءات حكومية، ولا تقدّم استشارات قانونية."
+  },
+  "a11y": {
+    "skipToContent": "تخطَّ إلى المحتوى",
+    "openMenu": "افتح القائمة",
+    "closeMenu": "أغلق القائمة",
+    "mainNavigation": "القائمة الرئيسية",
+    "footerNavigation": "روابط التذييل",
+    "changeLanguage": "تغيير اللغة",
+    "currentLanguage": "اللغة الحالية",
+    "homeLink": "YNWA — الصفحة الرئيسية",
+    "switchToDark": "التبديل إلى المظهر الداكن",
+    "switchToLight": "التبديل إلى المظهر الفاتح"
+  },
+  "scaffold": {
+    "notice": "المرحلة الأولى — الهيكل",
+    "body": "الهيكل العام ونظام التصميم والتوجيه ثنائي اللغة جاهزة. محتوى الصفحات يأتي في المرحلة الثالثة."
+  },
+  "notFound": {
+    "title": "الصفحة غير موجودة",
+    "body": "هذه الصفحة غير موجودة أو تم نقلها.",
+    "action": "العودة إلى الرئيسية"
+  }
+}

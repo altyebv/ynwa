@@ -1,0 +1,790 @@
+<title>YNWA Rebuild Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+
+<style>
+  :root{
+    --bone:      #FAF8F4;
+    --limestone: #F0ECE4;
+    --edge:      #DFD8CC;
+    --ink:       #16181C;
+    --ink-2:     #4C5158;
+    --ink-3:     #7C828B;
+    --maroon:    #8A1538;
+    --brass:     #9A7C43;
+    --ok:        #2F6B4F;
+    --warn:      #A15C1E;
+    --bad:       #96271F;
+
+    --ground: var(--bone);
+    --panel:  #FFFFFF;
+    --raised: var(--limestone);
+    --rule:   var(--edge);
+    --fg:     var(--ink);
+    --fg-2:   var(--ink-2);
+    --fg-3:   var(--ink-3);
+    --accent: var(--maroon);
+    --metal:  var(--brass);
+    --good:   var(--ok);
+    --mid:    var(--warn);
+    --stop:   var(--bad);
+
+    --display: "Newsreader", Georgia, "Times New Roman", serif;
+    --text: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --rail: 152px;
+    --gut: 40px;
+    --max: 1160px;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground: #101114;
+      --panel:  #16181C;
+      --raised: #1D2025;
+      --rule:   #2C3037;
+      --fg:     #ECE7DF;
+      --fg-2:   #A8ADB6;
+      --fg-3:   #767C86;
+      --accent: #CF4B6C;
+      --metal:  #C0A163;
+      --good:   #5FA37E;
+      --mid:    #D08C46;
+      --stop:   #D9695F;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground: #101114;
+    --panel:  #16181C;
+    --raised: #1D2025;
+    --rule:   #2C3037;
+    --fg:     #ECE7DF;
+    --fg-2:   #A8ADB6;
+    --fg-3:   #767C86;
+    --accent: #CF4B6C;
+    --metal:  #C0A163;
+    --good:   #5FA37E;
+    --mid:    #D08C46;
+    --stop:   #D9695F;
+  }
+
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--fg);
+    font-family:var(--text);
+    font-size:15px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px 120px}
+
+  /* ---------- masthead ---------- */
+  .mast{
+    border-bottom:1px solid var(--rule);
+    padding:56px 0 28px;
+    display:grid;
+    grid-template-columns:var(--rail) 1fr;
+    gap:var(--gut);
+    align-items:end;
+  }
+  .mast .meta{
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--fg-3);
+    line-height:1.9;
+  }
+  .mast h1{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:clamp(34px,5vw,54px);
+    line-height:1.08;
+    letter-spacing:-0.015em;
+    margin:0 0 12px;
+    text-wrap:balance;
+  }
+  .mast h1 em{font-style:italic;color:var(--accent)}
+  .mast p{margin:0;max-width:62ch;color:var(--fg-2);font-size:16px}
+
+  /* ---------- status strip ---------- */
+  .strip{
+    display:flex;flex-wrap:wrap;gap:0;
+    border-bottom:1px solid var(--rule);
+    margin-bottom:8px;
+  }
+  .strip div{
+    flex:1 1 150px;
+    padding:16px 20px 16px 0;
+    border-right:1px solid var(--rule);
+  }
+  .strip div:last-child{border-right:0}
+  .strip dt{
+    font-family:var(--mono);font-size:10px;letter-spacing:.11em;
+    text-transform:uppercase;color:var(--fg-3);margin:0 0 4px;
+  }
+  .strip dd{margin:0;font-size:14px;font-weight:500}
+
+  /* ---------- sections ---------- */
+  section{
+    display:grid;
+    grid-template-columns:var(--rail) 1fr;
+    gap:var(--gut);
+    border-bottom:1px solid var(--rule);
+    padding:52px 0;
+  }
+  section:last-of-type{border-bottom:0}
+  .rail{position:sticky;top:24px;align-self:start}
+  .num{
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+    color:var(--accent);display:block;margin-bottom:6px;
+  }
+  .rail .lbl{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--fg-3);line-height:1.7;
+  }
+  .body{min-width:0}
+
+  h2{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(24px,3vw,32px);line-height:1.15;
+    letter-spacing:-0.012em;margin:0 0 18px;text-wrap:balance;
+  }
+  h3{
+    font-family:var(--text);font-weight:600;font-size:13px;
+    letter-spacing:.05em;text-transform:uppercase;
+    color:var(--fg-2);margin:34px 0 12px;
+  }
+  h3:first-child{margin-top:0}
+  h4{font-family:var(--text);font-weight:600;font-size:14.5px;margin:22px 0 6px}
+  p{margin:0 0 14px;max-width:68ch}
+  ul,ol{margin:0 0 14px;padding-inline-start:20px;max-width:68ch}
+  li{margin-bottom:6px}
+  li::marker{color:var(--fg-3)}
+  strong{font-weight:600}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+  code{
+    font-family:var(--mono);font-size:.88em;
+    background:var(--raised);padding:1px 5px;border-radius:2px;
+    color:var(--fg);
+  }
+
+  .lede{font-size:17px;line-height:1.6;color:var(--fg-2);max-width:64ch}
+  .lede strong{color:var(--fg)}
+
+  /* ---------- tables ---------- */
+  .tw{overflow-x:auto;margin:0 0 18px;border:1px solid var(--rule)}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+  th{
+    text-align:start;font-family:var(--mono);font-weight:500;
+    font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--fg-3);padding:10px 14px;
+    border-bottom:1px solid var(--rule);background:var(--raised);
+    white-space:nowrap;
+  }
+  td{padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  td code{background:transparent;padding:0;color:var(--fg-2)}
+
+  /* ---------- pills ---------- */
+  .pill{
+    display:inline-block;font-family:var(--mono);font-size:9.5px;
+    letter-spacing:.09em;text-transform:uppercase;
+    padding:2px 7px;border:1px solid currentColor;border-radius:999px;
+    white-space:nowrap;
+  }
+  .p-ok{color:var(--good)}
+  .p-mid{color:var(--mid)}
+  .p-bad{color:var(--stop)}
+  .p-neu{color:var(--fg-3)}
+
+  /* ---------- audit list ---------- */
+  .audit{list-style:none;padding:0;margin:0 0 8px;max-width:none}
+  .audit li{
+    display:grid;grid-template-columns:96px 1fr;gap:16px;
+    padding:11px 0;border-bottom:1px solid var(--rule);margin:0;
+  }
+  .audit li:last-child{border-bottom:0}
+  .audit .k{padding-top:1px}
+  .audit .v{font-size:14px}
+  .audit .v b{font-weight:600}
+  .audit .v span{display:block;color:var(--fg-2);font-size:13.5px;margin-top:2px}
+
+  /* ---------- journey ---------- */
+  .journey{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:18px}
+  .journey > div{background:var(--panel);padding:18px}
+  .journey h5{
+    margin:0 0 3px;font-family:var(--display);font-weight:500;
+    font-size:19px;letter-spacing:-0.01em;
+  }
+  .journey .who{
+    font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--accent);margin:0 0 10px;
+  }
+  .journey ul{margin:0;padding-inline-start:16px;font-size:13px;color:var(--fg-2)}
+  .journey li{margin-bottom:3px}
+
+  /* ---------- swatches ---------- */
+  .sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:12px;margin-bottom:20px}
+  .sw figure{margin:0}
+  .sw .chip{height:56px;border:1px solid var(--rule)}
+  .sw figcaption{
+    font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+    color:var(--fg-2);margin-top:6px;line-height:1.6;
+  }
+  .sw figcaption b{display:block;color:var(--fg);letter-spacing:.09em;text-transform:uppercase;font-weight:500}
+
+  /* ---------- type specimen ---------- */
+  .spec{border:1px solid var(--rule);padding:22px;margin-bottom:18px;background:var(--panel)}
+  .spec .r{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--rule)}
+  .spec .r:last-child{border-bottom:0;padding-bottom:0}
+  .spec .r:first-child{padding-top:0}
+  .spec .t{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--fg-3);width:100px;flex:none;
+  }
+  .s-d{font-family:var(--display);font-size:28px;line-height:1.1;letter-spacing:-0.012em}
+  .s-b{font-family:var(--text);font-size:15px}
+  .s-m{font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+  .s-ar{font-family:"IBM Plex Sans Arabic",var(--text);font-size:20px;direction:rtl;line-height:1.9}
+
+  /* ---------- code block ---------- */
+  pre{
+    font-family:var(--mono);font-size:12.5px;line-height:1.75;
+    background:var(--panel);border:1px solid var(--rule);
+    padding:16px 18px;overflow-x:auto;margin:0 0 18px;
+    color:var(--fg-2);
+  }
+  pre b{color:var(--fg);font-weight:500}
+  pre i{color:var(--accent);font-style:normal}
+  pre em{color:var(--fg-3);font-style:normal}
+
+  /* ---------- callout ---------- */
+  .note{
+    border-inline-start:2px solid var(--accent);
+    background:var(--raised);
+    padding:14px 18px;margin:0 0 18px;
+  }
+  .note p{margin:0;font-size:14px;max-width:66ch}
+  .note p + p{margin-top:8px}
+  .note .h{
+    font-family:var(--mono);font-size:10px;letter-spacing:.11em;
+    text-transform:uppercase;color:var(--accent);display:block;margin-bottom:5px;
+  }
+
+  /* ---------- tree ---------- */
+  .tree{
+    font-family:var(--mono);font-size:12.5px;line-height:1.95;
+    border:1px solid var(--rule);padding:18px 20px;background:var(--panel);
+    overflow-x:auto;margin-bottom:18px;
+  }
+  .tree .d{color:var(--fg-3)}
+  .tree .n{color:var(--fg)}
+  .tree .c{color:var(--accent)}
+  .tree .later{color:var(--fg-3);font-style:italic}
+
+  /* ---------- questions ---------- */
+  .q{margin:0 0 22px}
+  .q .qh{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;
+    text-transform:uppercase;color:var(--fg-3);
+    padding-bottom:6px;border-bottom:1px solid var(--rule);margin-bottom:10px;
+  }
+  .q ol{margin:0;padding-inline-start:18px;max-width:70ch}
+  .q li{margin-bottom:8px;font-size:14px}
+  .q li b{font-weight:600}
+  .q li span{color:var(--fg-2)}
+
+  .foot{
+    border-top:1px solid var(--rule);margin-top:8px;padding-top:24px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--fg-3);
+    display:flex;flex-wrap:wrap;gap:8px 28px;
+  }
+
+  @media (max-width:820px){
+    :root{--rail:1fr;--gut:0px}
+    .mast,section{grid-template-columns:1fr;gap:18px}
+    .rail{position:static;display:flex;gap:12px;align-items:baseline}
+    .num{margin-bottom:0}
+    .strip div{flex-basis:50%;border-right:0}
+    .audit li{grid-template-columns:1fr;gap:4px}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="meta">
+      YNWA<br>ynwas.com<br>Doha, Qatar<br><br>Rev. 02<br>02 Sep 2026
+    </div>
+    <div>
+      <h1>Foundation for the <em>YNWA</em> rebuild</h1>
+      <p>Steps 1–5 of the brief: an audit of what exists, the positioning it should be replaced with, the sitemap, the content model, and the visual system — settled before a single component is written.</p>
+    </div>
+  </header>
+
+  <dl class="strip">
+    <div><dt>Stack</dt><dd>Next.js App Router · TS</dd></div>
+    <div><dt>Locales</dt><dd>en · ar (RTL)</dd></div>
+    <div><dt>Repo</dt><dd>D:\Repos\YNWA — empty</dd></div>
+    <div><dt>Blocking</dt><dd>7 client answers</dd></div>
+  </dl>
+
+  <!-- ================= 01 ================= -->
+  <section>
+    <div class="rail"><span class="num">01</span><span class="lbl">Audit<br>What exists</span></div>
+    <div class="body">
+      <h2>The current site, honestly assessed</h2>
+      <p class="lede">ynwas.com is a GoDaddy Website Builder single-pager. Its problem is not that it looks dated — it is that it <strong>miscategorises the business</strong>, and then undermines itself with unfinished template furniture. There is real material buried in it, though, and it is worth naming precisely before we throw anything away.</p>
+
+      <h3>Assets — real, verified, reusable</h3>
+      <ul class="audit">
+        <li><span class="k"><span class="pill p-ok">Keep</span></span><span class="v"><b>The service inventory</b><span>Around twenty concrete line items across three groups: company formation types, document attestation, and commercial/licensing work. This is the single most valuable thing on the site and the backbone of the new IA.</span></span></li>
+        <li><span class="k"><span class="pill p-ok">Keep</span></span><span class="v"><b>A real Doha address</b><span>Zone 39, Street 840, Building 78 — HUB Business Center, Doha. A physical office is a trust signal most competitors bury; we surface it.</span></span></li>
+        <li><span class="k"><span class="pill p-ok">Keep</span></span><span class="v"><b>Direct contact routes</b><span>+974 4144 8471, +974 5599 1069, info@ynwas.com, abashar@ynwas.com, 09:00–17:00, Instagram @yanwaservices. A named person in the email address is an asset, not an accident — §18 asks us to make it obvious a real professional is available.</span></span></li>
+        <li><span class="k"><span class="pill p-ok">Keep</span></span><span class="v"><b>The mission sentence</b><span>“…so they can stop sacrificing their life for the sake of being a business owner.” Clumsy as written, but it is the actual value proposition and it survives a rewrite.</span></span></li>
+        <li><span class="k"><span class="pill p-mid">Rework</span></span><span class="v"><b>The “Why Qatar” copy</b><span>Broadly accurate and correctly cites Qatar National Vision 2030, but reads as generic. Becomes the seed of the Qatar context page, rewritten against primary sources.</span></span></li>
+      </ul>
+
+      <h3>Liabilities — remove or replace</h3>
+      <ul class="audit">
+        <li><span class="k"><span class="pill p-bad">Critical</span></span><span class="v"><b>“Expert Legal Services for Business Incorporation”</b><span>The hero sells a law firm. The site elsewhere describes the team as “Public Relations Officers and legal experts.” PRO and corporate-services work is not legal practice, and positioning it as such is both the wrong category commercially and a claim that needs checking before it goes back up. See question 02.</span></span></li>
+        <li><span class="k"><span class="pill p-bad">Critical</span></span><span class="v"><b>“Get 10% off your first purchase”</b><span>E-commerce boilerplate on a corporate-services site. It tells a serious client that nobody edited this page. Delete outright.</span></span></li>
+        <li><span class="k"><span class="pill p-bad">Critical</span></span><span class="v"><b>No Arabic, anywhere</b><span>A Doha firm serving Gulf business owners with an English-only site. This is the largest single gap and the reason i18n is architectural rather than bolted on.</span></span></li>
+        <li><span class="k"><span class="pill p-mid">Remove</span></span><span class="v"><b>Empty template furniture</b><span>“Our Happy Clients!” with no clients. “My Blog” with no posts and the builder's own default label. Sign In / Create Account / Bookings — a dormant account system with nothing behind it. Each one is a dead end that costs credibility.</span></span></li>
+        <li><span class="k"><span class="pill p-mid">Fix</span></span><span class="v"><b>Unfinished copy</b><span>Hero paragraph repeated three times. “etc…” left in the attestation list. A licensing item truncated mid-sentence at “Changing Trade Name / Appointment of…”. Grammar breaks in the FAQ. Footer still reads © 2025 and “Powered by GoDaddy Website Builder”.</span></span></li>
+        <li><span class="k"><span class="pill p-mid">Fix</span></span><span class="v"><b>A contact form that learns nothing</b><span>Name and email only. No phone, no country, no service interest, no stage. §7 of the brief wants this site to become a lead-qualification system; the current form is the opposite of one.</span></span></li>
+        <li><span class="k"><span class="pill p-neu">Decide</span></span><span class="v"><b>Inconsistent naming</b><span>“Ynwa”, “YNWA”, “Ynwas”, and @yanwaservices all appear, against the domain ynwas.com. One canonical wordmark has to be chosen before any type is set. See question 01.</span></span></li>
+      </ul>
+
+      <h3>What the competition does</h3>
+      <p>The Qatar set-up market divides into two tiers. The bottom tier looks like ynwas.com does now. The top tier — ProPartner Group, Sovereign, CSP — wins on <strong>specificity</strong>: named consultants with photos and direct lines, concrete timelines, published fee ranges, ISO badges, forty-plus client logos, downloadable guides. None of them wins on design.</p>
+      <p>That is the opening. YNWA cannot out-claim firms with a decade of logos to show, and per §16 it must not try. It can out-<em>explain</em> them. A site that answers “what do I actually have to do to open a company here” better than anyone else in the market converts on competence rather than on credentials — and it is the one axis where craft, which we control, is the differentiator.</p>
+    </div>
+  </section>
+
+  <!-- ================= 02 ================= -->
+  <section>
+    <div class="rail"><span class="num">02</span><span class="lbl">Positioning<br>Message</span></div>
+    <div class="body">
+      <h2>From “legal services” to a company's whole life in Qatar</h2>
+      <p class="lede">The category shift is the strategic move. Not a law firm. Not another “business setup agency”. <strong>The administrative operator behind a company's whole life in Qatar</strong> — from the first licence to every renewal after it.</p>
+
+      <h3>The journey, mapped to services that already exist</h3>
+      <p>Start → Operate → Grow is not a slogan here. Every service currently listed on ynwas.com falls into one of the three stages without anything being invented:</p>
+
+      <div class="journey">
+        <div>
+          <h5>Start</h5>
+          <p class="who">First-time entrants</p>
+          <ul>
+            <li>Entity type selection</li>
+            <li>Commercial Registration issuance</li>
+            <li>Municipality licence issuance</li>
+            <li>QFC registration</li>
+            <li>Free zone registration</li>
+            <li>Foreign branch offices</li>
+            <li>Trade name registration</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Operate</h5>
+          <p class="who">Established companies</p>
+          <ul>
+            <li>CR &amp; licence amendment / renewal</li>
+            <li>WLL licence renewal</li>
+            <li>PRO &amp; government processing</li>
+            <li>Labour &amp; immigration files</li>
+            <li>Adding / cancelling activities</li>
+            <li>Adding / removing partners</li>
+            <li>Document attestation</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Grow</h5>
+          <p class="who">Scaling &amp; restructuring</p>
+          <ul>
+            <li>Corporate structuring</li>
+            <li>Holding company formation</li>
+            <li>Joint ventures</li>
+            <li>Trademark registration</li>
+            <li>Ongoing compliance</li>
+            <li>Strategic assistance</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note">
+        <span class="h">Why this matters commercially</span>
+        <p>Formation is a one-time transaction. Operate and Grow are recurring revenue. Structuring the site around the journey rather than around “company formation” reframes YNWA from a vendor you use once into a relationship you keep — and it gives an existing company, who is the easier sale, an obvious door to walk through.</p>
+      </div>
+
+      <h3>Hero candidates</h3>
+      <p>All three answer the four questions §5 requires — what, where, who, what next — without a claim that needs substantiating. Final wording needs client sign-off.</p>
+      <div class="tw"><table>
+        <thead><tr><th>#</th><th>Headline</th><th>Support line</th><th>Reads as</th></tr></thead>
+        <tbody>
+          <tr><td><code>A</code></td><td>Start, operate, and grow your company in Qatar.</td><td>YNWA handles formation, licensing, PRO and government processes — so your time goes to the business, not the paperwork.</td><td>Clearest. Names the journey outright. Recommended.</td></tr>
+          <tr><td><code>B</code></td><td>The paperwork behind a Qatari company. Handled.</td><td>Formation, licensing, PRO, immigration and compliance, run by a team that does this every day in Doha.</td><td>More confident, more memorable, slightly narrower.</td></tr>
+          <tr><td><code>C</code></td><td>Doing business in Qatar involves a lot of process. We know all of it.</td><td>From choosing a company structure to renewing a licence five years later — YNWA is the local team that handles the administrative side.</td><td>Most human. Best fit for the international audience.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Primary CTA <strong>Start Your Business</strong>; secondary <strong>Talk to an Expert</strong>. Both persist site-wide — the secondary always resolves to a human, never to a form.</p>
+
+      <h3>Trust pillars — only what can be substantiated today</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Pillar</th><th>Evidence we already hold</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Physically in Doha</td><td>Office at HUB Business Center, published hours, two direct phone lines</td><td><span class="pill p-ok">Verified</span></td></tr>
+          <tr><td>Every stage, one team</td><td>The service inventory spans formation through renewal and compliance</td><td><span class="pill p-ok">Verified</span></td></tr>
+          <tr><td>All licensing routes</td><td>Site already lists mainland CR, QFC and free zone registration</td><td><span class="pill p-ok">Verified</span></td></tr>
+          <tr><td>A named person answers</td><td>Direct email to a principal, not a shared inbox alone</td><td><span class="pill p-mid">Confirm</span></td></tr>
+          <tr><td>Years in operation</td><td>—</td><td><span class="pill p-bad">Unknown</span></td></tr>
+          <tr><td>Clients / testimonials</td><td>—</td><td><span class="pill p-bad">Unknown</span></td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Language to avoid</h3>
+      <p>Per §18 — banned from all copy unless a specific fact sits directly behind it: <em>your trusted partner, seamless solutions, end-to-end services, expert team, world-class, one-stop shop, hassle-free, we've got you covered.</em> Every competitor in the market uses at least four of these. Enforced by review, not by hope.</p>
+    </div>
+  </section>
+
+  <!-- ================= 03 ================= -->
+  <section>
+    <div class="rail"><span class="num">03</span><span class="lbl">Sitemap<br>Routes</span></div>
+    <div class="body">
+      <h2>Information architecture</h2>
+      <p class="lede">Locale-prefixed throughout, including English — <code>/en/services</code> and <code>/ar/services</code>, with <code>/</code> redirecting on negotiated language. Symmetric routing means hreflang, sitemap and the language switcher are all mechanical rather than special-cased.</p>
+
+      <div class="tree">
+<span class="d">/[locale]</span>                              <span class="later">— en | ar</span>
+<span class="d">├─</span> <span class="n">/</span>                              <span class="later">Home</span>
+<span class="d">├─</span> <span class="n">/services</span>                      <span class="later">Hub — Start / Operate / Grow</span>
+<span class="d">│  ├─</span> <span class="c">/services/company-formation</span> <span class="later">Start</span>
+<span class="d">│  ├─</span> <span class="c">/services/pro-services</span>      <span class="later">Operate</span>
+<span class="d">│  ├─</span> <span class="c">/services/corporate-services</span> <span class="later">Grow</span>
+<span class="d">│  └─</span> <span class="c">/services/[category]/[service]</span> <span class="later">phase 2, when copy is confirmed</span>
+<span class="d">├─</span> <span class="n">/doing-business-in-qatar</span>       <span class="later">Context + SEO gateway</span>
+<span class="d">├─</span> <span class="n">/about</span>
+<span class="d">├─</span> <span class="n">/contact</span>
+<span class="d">├─</span> <span class="n">/faq</span>                           <span class="later">canonical home of FAQPage schema</span>
+<span class="d">├─</span> <span class="n">/insights</span>                      <span class="later">index — ships empty-but-styled</span>
+<span class="d">│  └─</span> <span class="n">/insights/[slug]</span>
+<span class="d">├─</span> <span class="n">/start</span>                         <span class="later">assessment flow — phase 2</span>
+<span class="d">└─</span> <span class="n">/legal/privacy · /legal/terms</span>
+      </div>
+
+      <h3>Route decisions worth stating</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Decision</th><th>Call</th><th>Reasoning</th></tr></thead>
+        <tbody>
+          <tr><td>Arabic slugs</td><td>Latin slugs under <code>/ar</code> for v1</td><td>Arabic-script URLs percent-encode into unreadable strings when shared in WhatsApp, which is how half this audience shares links. The content model carries a per-locale <code>slug</code> field from day one, so switching later is data, not a refactor.</td></tr>
+          <tr><td>Three service pages, not twenty</td><td>Category pages first</td><td>Twenty thin pages of unverified copy is an SEO liability and violates §16. Individual service pages unlock as the client confirms real detail — the route is already reserved.</td></tr>
+          <tr><td>Qatar context as its own page</td><td><code>/doing-business-in-qatar</code></td><td>Highest-intent informational search term in the market, and the natural hub to link every future insight article from. Home carries a condensed version that links here.</td></tr>
+          <tr><td>Separate <code>/faq</code></td><td>Yes, plus contextual FAQs</td><td>One canonical page owns <code>FAQPage</code> structured data; category pages show a filtered subset without duplicating the markup.</td></tr>
+          <tr><td>How It Works</td><td>Home section, not a page</td><td>Four steps do not carry a page. It appears on home and repeats, abbreviated, on each service category.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Home page sequence</h3>
+      <p>Following §6, with one change: <strong>Qatar context moves ahead of social proof</strong>. We have no social proof yet, and closing with substance rather than an empty logo wall is stronger than following the brief's order literally.</p>
+      <div class="tw"><table>
+        <thead><tr><th>#</th><th>Section</th><th>Job</th><th>Content status</th></tr></thead>
+        <tbody>
+          <tr><td><code>01</code></td><td>Hero</td><td>What, where, who, next — in under five seconds</td><td><span class="pill p-mid">Draft</span></td></tr>
+          <tr><td><code>02</code></td><td>Start / Operate / Grow</td><td>The journey as three doors into the service tree</td><td><span class="pill p-ok">Ready</span></td></tr>
+          <tr><td><code>03</code></td><td>Services</td><td>Three categories, real line items beneath each</td><td><span class="pill p-ok">Ready</span></td></tr>
+          <tr><td><code>04</code></td><td>How it works</td><td>Understand → Plan → Handle → Continue</td><td><span class="pill p-ok">Ready</span></td></tr>
+          <tr><td><code>05</code></td><td>Why YNWA</td><td>Four substantiable reasons, no superlatives</td><td><span class="pill p-mid">Draft</span></td></tr>
+          <tr><td><code>06</code></td><td>Doing business in Qatar</td><td>Cited facts; gateway to the context page</td><td><span class="pill p-ok">Ready</span></td></tr>
+          <tr><td><code>07</code></td><td>Proof</td><td>Component built, hidden until real content exists</td><td><span class="pill p-bad">Blocked</span></td></tr>
+          <tr><td><code>08</code></td><td>FAQ</td><td>Six real questions; answers verified or generalised</td><td><span class="pill p-mid">Draft</span></td></tr>
+          <tr><td><code>09</code></td><td>Final CTA</td><td>Office, hours, phone, and one human to talk to</td><td><span class="pill p-ok">Ready</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- ================= 04 ================= -->
+  <section>
+    <div class="rail"><span class="num">04</span><span class="lbl">Content<br>Model</span></div>
+    <div class="body">
+      <h2>Content model, with a safety catch built in</h2>
+      <p class="lede">§16 forbids inventing anything and §12 demands content stay separate from presentation. Both are satisfied by the same structure: typed content modules where <strong>every record carries a verification status</strong>, and the build refuses to ship unverified records to production.</p>
+
+      <h3>Core types</h3>
+      <pre><b>type</b> Locale = <i>'en'</i> | <i>'ar'</i>
+<b>type</b> L&lt;T&gt; = Record&lt;Locale, T&gt;              <em>// every string is a pair</em>
+
+<b>type</b> Status =
+  | <i>'confirmed'</i>      <em>// client verified — safe to publish</em>
+  | <i>'derived'</i>        <em>// taken verbatim from the old site</em>
+  | <i>'placeholder'</i>    <em>// written by us, must be replaced</em>
+  | <i>'blocked'</i>        <em>// needs a fact we do not have</em>
+
+<b>interface</b> ServiceCategory {
+  id: <i>'company-formation'</i> | <i>'pro-services'</i> | <i>'corporate-services'</i>
+  stage: <i>'start'</i> | <i>'operate'</i> | <i>'grow'</i>
+  slug: L&lt;string&gt;
+  title: L&lt;string&gt;
+  lede: L&lt;string&gt;
+  audience: L&lt;string&gt;                   <em>// who this page is for</em>
+  services: Service[]
+  process?: ProcessStep[]
+  faqIds: string[]
+  seo: SeoMeta
+  status: Status
+}
+
+<b>interface</b> Service {
+  id: string
+  slug: L&lt;string&gt;
+  title: L&lt;string&gt;
+  summary: L&lt;string&gt;
+  detail?: L&lt;string&gt;                    <em>// unlocks the detail page</em>
+  requirements?: L&lt;string[]&gt;            <em>// documents needed</em>
+  typicalDuration?: L&lt;string&gt;           <em>// blocked until confirmed</em>
+  relatedIds: string[]
+  status: Status
+}
+
+<b>interface</b> Faq {
+  id: string
+  question: L&lt;string&gt;
+  answer: L&lt;string&gt;
+  categoryId?: string
+  sources?: { label: string; url: string }[]
+  schemaEligible: boolean               <em>// only true when verified</em>
+  status: Status
+}
+
+<b>interface</b> Testimonial {
+  id: string; quote: L&lt;string&gt;; author: string
+  role: L&lt;string&gt;; company: string; logo?: ImageRef
+  status: Status                        <em>// none exist yet — array is empty</em>
+}</pre>
+
+      <div class="note">
+        <span class="h">The safety catch</span>
+        <p>A single helper, <code>publishable(record)</code>, gates every render. In development, anything not <code>confirmed</code> renders with a dotted outline and a corner tag naming its status. In a production build, a script walks the content tree and <strong>fails the build</strong> if a <code>blocked</code> record is reachable from a live route.</p>
+        <p>The effect: a fabricated testimonial cannot reach production by accident, an empty proof section hides itself instead of rendering “Our Happy Clients!” over nothing, and the client's outstanding items are visible in the UI rather than buried in a checklist.</p>
+      </div>
+
+      <h3>Where content lives</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Path</th><th>Holds</th><th>Format</th></tr></thead>
+        <tbody>
+          <tr><td><code>content/services.ts</code></td><td>Three categories, ~20 services</td><td>Typed TS</td></tr>
+          <tr><td><code>content/faqs.ts</code></td><td>FAQ bank with sources and schema eligibility</td><td>Typed TS</td></tr>
+          <tr><td><code>content/process.ts</code></td><td>The four-step method</td><td>Typed TS</td></tr>
+          <tr><td><code>content/company.ts</code></td><td>Address, hours, phones, emails, socials — one source of truth for footer, contact page and <code>LocalBusiness</code> schema</td><td>Typed TS</td></tr>
+          <tr><td><code>content/proof.ts</code></td><td>Testimonials, logos, stats — ships empty</td><td>Typed TS</td></tr>
+          <tr><td><code>messages/{en,ar}.json</code></td><td>UI chrome: nav labels, buttons, form errors, aria labels</td><td>next-intl JSON</td></tr>
+          <tr><td><code>content/insights/*.mdx</code></td><td>Articles, per locale, frontmatter-typed</td><td>MDX</td></tr>
+        </tbody>
+      </table></div>
+      <p>Typed modules rather than a CMS for v1: they are type-safe, reviewable in a diff, and cost nothing to host. The shapes above map cleanly onto Sanity or Payload documents when the client wants to edit content themselves — that is a migration, not a rewrite.</p>
+    </div>
+  </section>
+
+  <!-- ================= 05 ================= -->
+  <section>
+    <div class="rail"><span class="num">05</span><span class="lbl">Visual<br>Direction</span></div>
+    <div class="body">
+      <h2>Modern Institutional</h2>
+      <p class="lede">The reference is not a competitor website. It is the printed material of a serious professional practice: <strong>limestone, ink, a single ceremonial accent, and a great deal of restraint</strong>. This document is set in the system it proposes.</p>
+
+      <h3>Palette</h3>
+      <div class="sw">
+        <figure><div class="chip" style="background:#FAF8F4"></div><figcaption><b>Bone</b>#FAF8F4<br>page ground</figcaption></figure>
+        <figure><div class="chip" style="background:#F0ECE4"></div><figcaption><b>Limestone</b>#F0ECE4<br>raised surface</figcaption></figure>
+        <figure><div class="chip" style="background:#16181C"></div><figcaption><b>Ink</b>#16181C<br>primary text</figcaption></figure>
+        <figure><div class="chip" style="background:#4C5158"></div><figcaption><b>Ink 60</b>#4C5158<br>secondary text</figcaption></figure>
+        <figure><div class="chip" style="background:#8A1538"></div><figcaption><b>Maroon</b>#8A1538<br>accent, CTA</figcaption></figure>
+        <figure><div class="chip" style="background:#9A7C43"></div><figcaption><b>Brass</b>#9A7C43<br>hairlines, eyebrows</figcaption></figure>
+      </div>
+      <p><strong>#8A1538 is Qatar's flag maroon.</strong> It is the one deliberate national reference in the system and it earns its place — but it is a scalpel, not a wash. It appears on primary buttons, active states, section numbers and nothing else. Flooded across large surfaces it reads as a government portal, which §4 explicitly forbids. Brass carries the small metallic details a maroon-heavy palette would otherwise have to; the neutrals are warmed toward the accent rather than left as unconsidered grey.</p>
+      <p>Dark theme lifts the accent to <code>#CF4B6C</code> — #8A1538 fails contrast on a dark ground — and drops the paper to a cool <code>#101114</code> so the warm neutrals stay legible as warm.</p>
+
+      <h3>Typography</h3>
+      <div class="spec">
+        <div class="r"><span class="t">Display · LTR</span><span class="s-d">Start, operate, and grow in Qatar</span></div>
+        <div class="r"><span class="t">Display · RTL</span><span class="s-ar">التأسيس والتشغيل والنمو في قطر</span></div>
+        <div class="r"><span class="t">Body · LTR</span><span class="s-b">Commercial Registration issuance, amendment and renewal</span></div>
+        <div class="r"><span class="t">Body · RTL</span><span class="s-ar" style="font-size:15px">إصدار السجل التجاري وتعديله وتجديده</span></div>
+        <div class="r"><span class="t">Data · Mono</span><span class="s-m">QFC · QFZ · QSTP · MOCI · +974 4144 8471</span></div>
+      </div>
+      <div class="tw"><table>
+        <thead><tr><th>Role</th><th>Latin</th><th>Arabic</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Display</td><td>Newsreader</td><td>Noto Naskh Arabic</td><td>Both are moderate-contrast editorial faces with a newspaper rather than a fashion voice. They sit at similar weight and colour on the page, which is what makes a bilingual headline look like one design instead of two.</td></tr>
+          <tr><td>Text &amp; UI</td><td>IBM Plex Sans</td><td>IBM Plex Sans Arabic</td><td>One superfamily, drawn together, genuinely institutional. Sidesteps Cairo and Tajawal, which are so common in Gulf marketing that they read as default.</td></tr>
+          <tr><td>Data</td><td>IBM Plex Mono</td><td>—</td><td>Reference numbers, phone numbers, entity codes, table labels. Latin only; Arabic falls back to Plex Sans Arabic.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Arabic is not the Latin scale reused. Arabic sets roughly <strong>8% larger with ~15% more leading</strong> at the same optical weight — the script has no ascender/descender rhythm to carry tight line-height, and cramped Arabic is the single clearest sign a site was designed in English first. Two locale-aware scales, one set of components.</p>
+      <p>Upgrade path if the client will license: <em>29LT Bukra</em> or <em>TheSans Arabic</em> for display would lift the Arabic further. Noto Naskh is the strong free option and ships v1 without compromise.</p>
+
+      <h3>Layout &amp; motion</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Base unit</td><td><code>4px</code>; scale 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96 · 128 · 160</td></tr>
+          <tr><td>Grid</td><td>12 column, <code>1280px</code> max content inside a <code>1440px</code> shell, <code>24px</code> gutters</td></tr>
+          <tr><td>Section rhythm</td><td><code>96px</code> mobile → <code>128px</code> tablet → <code>160px</code> desktop</td></tr>
+          <tr><td>Measure</td><td>62–68 characters Latin, 55–62 Arabic</td></tr>
+          <tr><td>Radius</td><td><code>2px</code> default, <code>0</code> on large surfaces. Rounded corners read as SaaS.</td></tr>
+          <tr><td>Elevation</td><td>Hairline borders carry separation. Exactly one shadow token, for the sticky nav only.</td></tr>
+          <tr><td>Motion</td><td><code>180–320ms</code>, <code>cubic-bezier(.16,1,.3,1)</code>, opacity + ≤16px transform. Nothing loops, nothing floats, nothing parallaxes.</td></tr>
+          <tr><td>Reduced motion</td><td><code>prefers-reduced-motion</code> collapses every transition to an opacity fade at <code>120ms</code></td></tr>
+        </tbody>
+      </table></div>
+      <p>The Qatari reference beyond the maroon is <strong>structural, not decorative</strong>: the mashrabiya screen as a fine 1px lattice used at very low opacity behind the hero and the closing CTA, and nowhere else. Set in CSS, not shipped as an image. No sand dunes, no skyline stock, no falcon iconography.</p>
+      <p>Imagery direction: architectural detail and real workplace photography over stock handshakes. Until real photography exists, sections are composed to work with type and rule alone — the layout must not depend on images we do not have.</p>
+    </div>
+  </section>
+
+  <!-- ================= 06 ================= -->
+  <section>
+    <div class="rail"><span class="num">06</span><span class="lbl">Components</span></div>
+    <div class="body">
+      <h2>Component inventory</h2>
+      <p class="lede">Server components by default. Client boundaries only where interaction genuinely requires them — noted below, and deliberately few, because every one of them is JavaScript shipped to a phone on a Doha mobile network.</p>
+      <div class="tw"><table>
+        <thead><tr><th>Component</th><th>Env</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>Container</code> / <code>Section</code></td><td>server</td><td>Owns the grid and vertical rhythm. Nothing else sets section padding.</td></tr>
+          <tr><td><code>Eyebrow</code> / <code>SectionHeading</code></td><td>server</td><td>Mono eyebrow + display heading + optional lede. Enforces heading order via a required <code>level</code> prop.</td></tr>
+          <tr><td><code>Navbar</code></td><td>client</td><td>Scroll state, mega-menu for services, mobile drawer. Drawer slides from the inline-end edge, so it mirrors correctly in RTL for free.</td></tr>
+          <tr><td><code>LanguageSwitcher</code></td><td>client</td><td>Swaps locale on the current pathname, preserving the route. Renders both names in their own script — <span dir="rtl" style="font-family:'IBM Plex Sans Arabic'">العربية</span> / English — never a flag.</td></tr>
+          <tr><td><code>LocaleLink</code></td><td>server</td><td>Wraps <code>next/link</code>, prefixes the active locale. Direct <code>next/link</code> use is lint-banned.</td></tr>
+          <tr><td><code>Hero</code></td><td>server</td><td>Headline, lede, dual CTA, lattice field. Entrance animation via CSS only — no JS on the critical path, and the LCP text paints immediately.</td></tr>
+          <tr><td><code>JourneyNav</code></td><td>client</td><td>Start / Operate / Grow. Tabs on desktop, stacked cards on mobile — genuinely different layouts, not a shrunk one.</td></tr>
+          <tr><td><code>ServiceCard</code> / <code>ServiceGrid</code></td><td>server</td><td>Three variants: category, service, compact. Reads <code>status</code> and renders the dev-only placeholder outline.</td></tr>
+          <tr><td><code>ProcessTimeline</code></td><td>server</td><td>Numbered because the four steps <em>are</em> a sequence. Connector runs inline-start→end, mirrors under RTL.</td></tr>
+          <tr><td><code>FaqAccordion</code></td><td>client</td><td>Native <code>&lt;details&gt;</code> with progressive enhancement. Chevron flips on <code>[dir=rtl]</code>. Emits <code>FAQPage</code> JSON-LD only for <code>schemaEligible</code> entries.</td></tr>
+          <tr><td><code>ProofSection</code></td><td>server</td><td>Testimonials, logo wall, stats. Returns <code>null</code> on an empty array — cannot render an empty heading.</td></tr>
+          <tr><td><code>StatBlock</code></td><td>server</td><td>Built, unused, and staying unused until real numbers arrive.</td></tr>
+          <tr><td><code>ContactForm</code></td><td>client</td><td>react-hook-form + zod, server action, honeypot, rate limit. Fields carry the qualification data the current form throws away.</td></tr>
+          <tr><td><code>CtaBand</code></td><td>server</td><td>Closing call. Three variants: full, inline, compact.</td></tr>
+          <tr><td><code>Breadcrumbs</code></td><td>server</td><td>Separator is a chevron that flips by direction, plus <code>BreadcrumbList</code> JSON-LD.</td></tr>
+          <tr><td><code>Footer</code></td><td>server</td><td>Reads <code>company.ts</code>. Address, hours, both lines, both emails, Instagram, locale switch.</td></tr>
+          <tr><td><code>ChatLauncher</code></td><td>client</td><td>Ships as a UI shell behind a flag with no provider attached. Fixed to the inline-end edge; must not cover the mobile CTA.</td></tr>
+          <tr><td><code>Reveal</code></td><td>client</td><td>One IntersectionObserver wrapper, used sparingly. Resting state is visible — content is never parked at zero opacity.</td></tr>
+          <tr><td><code>Prose</code></td><td>server</td><td>MDX typography for insights, direction-aware.</td></tr>
+          <tr><td><code>SkipLink</code></td><td>server</td><td>First focusable element on every page.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- ================= 07 ================= -->
+  <section>
+    <div class="rail"><span class="num">07</span><span class="lbl">Technical<br>Architecture</span></div>
+    <div class="body">
+      <h2>Technical decisions</h2>
+      <div class="tw"><table>
+        <thead><tr><th>Area</th><th>Decision</th><th>Reasoning</th></tr></thead>
+        <tbody>
+          <tr><td>Framework</td><td>Next.js App Router, TypeScript strict</td><td>Per §11. Server components by default; static rendering for every marketing route.</td></tr>
+          <tr><td>i18n</td><td><code>next-intl</code>, <code>[locale]</code> segment</td><td>App-Router native, supports <code>setRequestLocale</code> so localized pages stay statically rendered. Alternative — hand-rolled dictionaries — costs more and gives less.</td></tr>
+          <tr><td>Styling</td><td>Tailwind v4, CSS-first <code>@theme</code> tokens</td><td>Tokens live in CSS variables, so the design system is readable outside the framework and theming needs no config file.</td></tr>
+          <tr><td>Component kit</td><td>None</td><td>§4 forbids looking like a template. shadcn's defaults are recognisable at a glance, and a bespoke primitive layer here is roughly a day's work.</td></tr>
+          <tr><td>RTL</td><td>Logical properties only, lint-enforced</td><td>An ESLint rule bans <code>pl-/pr-/ml-/mr-/left-/right-/text-left/text-right</code>. RTL correctness becomes impossible to forget rather than something audited at the end.</td></tr>
+          <tr><td>Fonts</td><td><code>next/font/local</code>, self-hosted, subset</td><td>No third-party request on the critical path. Arabic subsetting matters — unsubset Arabic files are large.</td></tr>
+          <tr><td>Motion</td><td><code>motion</code> (Framer), client leaves only</td><td>Hero and section reveals are CSS. The library appears only where a real gesture needs it.</td></tr>
+          <tr><td>Forms</td><td>react-hook-form + zod + server action</td><td>No third-party form service. Validation schema is shared between client and server.</td></tr>
+          <tr><td>SEO</td><td>Metadata API + generated <code>sitemap.ts</code> / <code>robots.ts</code></td><td><code>alternates.languages</code> with reciprocal hreflang and <code>x-default</code>, canonicals per locale.</td></tr>
+          <tr><td>Structured data</td><td><code>Organization</code>, <code>LocalBusiness</code>, <code>Service</code>, <code>BreadcrumbList</code>, <code>FAQPage</code></td><td>All generated from <code>content/</code>, so schema cannot drift from what the page says. <code>FAQPage</code> emitted only for verified answers.</td></tr>
+          <tr><td>Analytics</td><td>Vercel Analytics or Plausible</td><td>Cookieless, so the site needs no consent banner. Client decision.</td></tr>
+          <tr><td>Hosting</td><td>Vercel</td><td>Static output for marketing routes; edge middleware handles locale negotiation only.</td></tr>
+          <tr><td>Budget</td><td>LCP &lt; 1.8s, CLS &lt; 0.05, JS &lt; 90kb on home</td><td>Checked in CI, not at the end.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="note">
+        <span class="h">One constraint on this session</span>
+        <p>This session can read and write files in <code>D:\Repos\YNWA</code>, but it has no shell on your machine — so <code>npm install</code>, <code>next dev</code> and <code>next build</code> have to be run by you. I will scaffold the repo, write the files, and hand you the exact commands; you run them and paste anything that breaks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 08 ================= -->
+  <section>
+    <div class="rail"><span class="num">08</span><span class="lbl">Sequence</span></div>
+    <div class="body">
+      <h2>Build sequence</h2>
+      <p class="lede">Following §20. Each phase ends at something you can look at and react to, rather than a long silent stretch ending in a reveal.</p>
+      <div class="tw"><table>
+        <thead><tr><th>Phase</th><th>Work</th><th>You get</th></tr></thead>
+        <tbody>
+          <tr><td><code>A</code></td><td>Scaffold: Next.js, TS, Tailwind v4 tokens, next-intl routing, fonts, lint rules, shell layout, nav + footer</td><td>A running bilingual site with a real header and footer that switches language and mirrors correctly</td></tr>
+          <tr><td><code>B</code></td><td>Content modules: services, FAQs, process, company, all typed, EN complete, AR stubbed</td><td>Every real fact from the old site, structured and type-checked</td></tr>
+          <tr><td><code>C</code></td><td>Primitives + home sections 01–09</td><td>The full homepage, English, desktop and mobile</td></tr>
+          <tr><td><code>D</code></td><td>Arabic content pass + RTL audit across every breakpoint</td><td>The homepage in Arabic, reviewed as Arabic rather than as a mirrored English page</td></tr>
+          <tr><td><code>E</code></td><td>Service hub + three category pages, contact, about, FAQ</td><td>A complete site</td></tr>
+          <tr><td><code>F</code></td><td>SEO infrastructure: metadata, hreflang, sitemap, robots, JSON-LD, OG images</td><td>Something ready to be indexed</td></tr>
+          <tr><td><code>G</code></td><td>Accessibility (WCAG 2.2 AA), responsive audit, performance pass</td><td>An audit report and the fixes applied</td></tr>
+          <tr><td><code>H</code></td><td>Insights architecture, assessment flow, chatbot shell</td><td>Phase 2 foundations, when the client is ready</td></tr>
+        </tbody>
+      </table></div>
+      <p>Arabic sits at phase D deliberately — early enough that RTL problems surface while the layout is still cheap to change, late enough that we are not writing Arabic copy for sections that may not survive review.</p>
+    </div>
+  </section>
+
+  <!-- ================= 09 ================= -->
+  <section>
+    <div class="rail"><span class="num">09</span><span class="lbl">Open<br>Questions</span></div>
+    <div class="body">
+      <h2>What we need from the client</h2>
+      <p class="lede">Nothing here blocks phases A–C. All of it blocks launch. The first two are now settled; the remaining seven are still open with the client.</p>
+
+      <div class="q">
+        <div class="qh" style="color:var(--good)">Identity — resolved 02 Sep</div>
+        <ol>
+          <li><b>Canonical name and wordmark.</b> <span><span class="pill p-ok" style="margin-inline-end:6px">Resolved</span>No logo existed, so one was drawn. The wordmark is <code>YNWA</code>; <code>ynwas.com</code> remains the domain. Construction, scale, lockups and usage are in the identity document. Still worth asking the client whether YNWA is an acronym that should be expanded anywhere.</span></li>
+          <li><b>The word “legal”.</b> <span><span class="pill p-ok" style="margin-inline-end:6px">Resolved</span>The work is government and administrative process, not legal practice. No page describes it as legal services, and the footer carries an explicit non-advice line in both languages. If a licensed lawyer <em>is</em> on the team, that is a separate, substantiable claim to add later — it is not this.</span></li>
+        </ol>
+      </div>
+
+      <div class="q">
+        <div class="qh">Substance — blocks Why YNWA, About and Proof</div>
+        <ol start="3">
+          <li><b>Founding year and team size.</b> <span>Even “operating since 2019, six people” unlocks a whole section. Without it, that section does not exist.</span></li>
+          <li><b>Any client willing to be named.</b> <span>One real testimonial with a name and a company outperforms twenty invented ones, and is the only kind we will publish. Logos alone, with permission, also work.</span></li>
+          <li><b>Licences, registrations, memberships.</b> <span>Qatar Chamber membership, a CR number, any accreditation. These belong in the footer and in <code>LocalBusiness</code> schema.</span></li>
+          <li><b>Which routes YNWA actually handles.</b> <span>Mainland/MOCI and QFC and free zones are listed on the current site. What about QSTP, Media City, and the Investment Promotion Agency route? We must not list a route the team does not work with.</span></li>
+        </ol>
+      </div>
+
+      <div class="q">
+        <div class="qh">Operations — blocks Contact and the assessment flow</div>
+        <ol start="7">
+          <li><b>Where should enquiries land?</b> <span>Which inbox, is WhatsApp an official channel (it is how this market prefers to talk), and what is the expected response time we can honestly publish?</span></li>
+          <li><b>Are there process facts we can publish?</b> <span>Typical formation timeline, standard document checklist, indicative fee ranges. Any one of these is worth more than a page of adjectives — and specificity is exactly where the better competitors are beating YNWA.</span></li>
+        </ol>
+      </div>
+
+      <div class="q">
+        <div class="qh">Arabic — blocks phase D</div>
+        <ol start="9">
+          <li><b>Who signs off the Arabic?</b> <span>I will write professional Gulf-business Arabic rather than translate the English mechanically, but Arabic copy for a Qatari audience needs a native reviewer inside the business. Also: does the firm have an established Arabic name, or do we transliterate?</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>YNWA rebuild · foundation rev. 02</span>
+    <span>Steps 1–5 of 12</span>
+    <span>02 September 2026</span>
+  </div>
+
+</div>

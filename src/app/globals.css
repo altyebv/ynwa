@@ -1,0 +1,437 @@
+@import 'tailwindcss';
+
+/* =============================================================================
+   YNWA design tokens — "Modern Institutional"
+
+   Limestone and ink, one ceremonial accent, hairlines instead of shadows.
+   #8A1538 is Qatar's flag maroon. It is the single national reference in the
+   system and it is used as a scalpel: primary actions, active states, section
+   numerals. Flooded across a large surface it reads as a government portal,
+   which the brief explicitly rules out.
+
+   Tokens are named by ROLE, not by colour. `ground` is the page, `fg` is text
+   on it. This matters because the values invert between themes — a token
+   called "bone" that resolves to near-black in dark mode is a bug waiting to
+   be written.
+
+   Every foreground/background pair below is measured against WCAG 2.2 AA
+   (4.5:1 for text, 3:1 for UI boundaries). Ratios are noted per token; if you
+   change a value, re-measure rather than eyeball it.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* --- surface -------------------------------------------------------- */
+  --t-ground: #faf8f4; /* bone — the page */
+  --t-raised: #f0ece4; /* limestone — raised surface */
+  --t-raised-deep: #e7e1d6; /* pressed / hover on raised */
+  --t-paper: #ffffff; /* cards, inputs, popovers */
+  --t-edge: #ded7cb; /* hairline rule on ground */
+  --t-edge-soft: #eae4da; /* hairline on raised */
+
+  /* --- foreground ----------------------------------------------------- */
+  --t-fg: #16181c; /* 16.8:1  primary text */
+  --t-fg-70: #3a3f46; /* 10.5:1  emphasis */
+  --t-fg-60: #4c5158; /*  7.5:1  secondary text */
+  --t-fg-40: #686d75; /*  4.9:1  tertiary — AA at small sizes */
+  --t-fg-20: #b3b8bf; /*  disabled only, exempt from AA */
+
+  /* --- accent --------------------------------------------------------- */
+  --t-accent: #8a1538; /* Qatar flag maroon — fills */
+  --t-accent-strong: #6d0f2b; /* hover / pressed fill */
+  --t-accent-text: #8a1538; /*  8.8:1 on ground — accent as text */
+  --t-accent-wash: #f6ebee; /* tint behind accent content */
+  --t-on-accent: #faf8f4; /*  8.8:1 on the accent fill. Does NOT
+                                    invert between themes: the fill stays
+                                    dark in both, so its text must too. */
+
+  /* --- detail (brass) -------------------------------------------------- */
+  --t-detail: #9a7c43; /* hairlines and rules — decorative, exempt */
+  --t-detail-text: #836631; /*  5.1:1 on ground, 4.6:1 on raised */
+  --t-detail-wash: #f3eee3;
+
+  /* --- semantic -------------------------------------------------------- */
+  --t-positive: #2f6b4f;
+  --t-caution: #8c4f19;
+  --t-critical: #96271f;
+
+  /* --- decorative ------------------------------------------------------ */
+  --lattice-opacity: 0.16;
+}
+
+/* The un-stamped document is the common case: most visitors never touch a
+   theme control, so `prefers-color-scheme` alone decides. Guarded so an
+   explicit light choice still beats a dark OS. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --t-ground: #121316;
+    --t-raised: #1a1c21;
+    --t-raised-deep: #212429;
+    --t-paper: #191b20;
+    --t-edge: #2e323a;
+    --t-edge-soft: #23262c;
+
+    --t-fg: #ede9e2; /* 15.4:1 — warm off-white, echoes the bone ground */
+    --t-fg-70: #c4c0b9; /* 11.0:1 */
+    --t-fg-60: #a2a6ae; /*  7.6:1 */
+    --t-fg-40: #82878f; /*  5.1:1 */
+    --t-fg-20: #4a4f57;
+
+    /* #8A1538 is 2.0:1 on this ground — unusable as text and barely visible
+       as a fill. The fill lifts just enough to clear 3:1 as a UI boundary
+       while keeping light text on it above 4.5:1; the text form lifts
+       further, because text needs 4.5:1 in its own right. */
+    --t-accent: #b93052; /*  3.2:1 vs ground, on-accent text 5.5:1 */
+    --t-accent-strong: #a2263f;
+    --t-accent-text: #d2607a; /*  5.0:1 on ground, 4.6:1 on raised */
+    --t-accent-wash: #24171c;
+
+    --t-detail: #7a6640;
+    --t-detail-text: #c0a163; /*  7.5:1 */
+    --t-detail-wash: #201d16;
+
+    --t-positive: #5fa37e;
+    --t-caution: #d08c46;
+    --t-critical: #d9695f;
+
+    --lattice-opacity: 0.1;
+  }
+}
+
+/* An explicit dark choice wins over a light OS. Same values; declared twice
+   because a media query and an attribute cannot be combined in one selector. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --t-ground: #121316;
+  --t-raised: #1a1c21;
+  --t-raised-deep: #212429;
+  --t-paper: #191b20;
+  --t-edge: #2e323a;
+  --t-edge-soft: #23262c;
+
+  --t-fg: #ede9e2;
+  --t-fg-70: #c4c0b9;
+  --t-fg-60: #a2a6ae;
+  --t-fg-40: #82878f;
+  --t-fg-20: #4a4f57;
+
+  --t-accent: #b93052;
+  --t-accent-strong: #a2263f;
+  --t-accent-text: #d2607a;
+  --t-accent-wash: #24171c;
+
+  --t-detail: #7a6640;
+  --t-detail-text: #c0a163;
+  --t-detail-wash: #201d16;
+
+  --t-positive: #5fa37e;
+  --t-caution: #d08c46;
+  --t-critical: #d9695f;
+
+  --lattice-opacity: 0.1;
+}
+
+/* Colours are `inline` so the utilities point at the live variables and
+   follow the theme; everything else is a fixed value. */
+@theme inline {
+  --color-ground: var(--t-ground);
+  --color-raised: var(--t-raised);
+  --color-raised-deep: var(--t-raised-deep);
+  --color-paper: var(--t-paper);
+  --color-edge: var(--t-edge);
+  --color-edge-soft: var(--t-edge-soft);
+
+  --color-fg: var(--t-fg);
+  --color-fg-70: var(--t-fg-70);
+  --color-fg-60: var(--t-fg-60);
+  --color-fg-40: var(--t-fg-40);
+  --color-fg-20: var(--t-fg-20);
+
+  --color-accent: var(--t-accent);
+  --color-accent-strong: var(--t-accent-strong);
+  --color-accent-text: var(--t-accent-text);
+  --color-accent-wash: var(--t-accent-wash);
+  --color-on-accent: var(--t-on-accent);
+
+  --color-detail: var(--t-detail);
+  --color-detail-text: var(--t-detail-text);
+  --color-detail-wash: var(--t-detail-wash);
+
+  --color-positive: var(--t-positive);
+  --color-caution: var(--t-caution);
+  --color-critical: var(--t-critical);
+}
+
+@theme {
+  /* --- type ------------------------------------------------------------ */
+  /* --display-active / --sans-active are swapped per language below, so a
+     single set of components serves both scripts. */
+  --font-display: var(--display-active), Georgia, 'Times New Roman', serif;
+  --font-sans: var(--sans-active), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* --- space ------------------------------------------------------------ */
+  /* 4px base: p-6 = 24px, py-24 = 96px, py-40 = 160px. */
+  --spacing: 0.25rem;
+
+  /* --- shape ------------------------------------------------------------ */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-full: 9999px;
+
+  /* Exactly one shadow in the system, for the sticky header. Separation is
+     carried by hairlines everywhere else. */
+  --shadow-header: 0 1px 0 0 rgb(0 0 0 / 0.06), 0 8px 24px -16px rgb(0 0 0 / 0.28);
+
+  /* --- motion ----------------------------------------------------------- */
+  --ease-institutional: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =============================================================================
+   Locale-aware typography
+
+   Arabic is not the Latin scale reused. At the same nominal size Arabic reads
+   optically smaller and needs materially more leading — the script has no
+   ascender/descender rhythm to carry tight line-height. Cramped Arabic is the
+   clearest sign a site was designed in English and translated afterwards.
+   ========================================================================== */
+
+:root {
+  --display-active: var(--font-newsreader);
+  --sans-active: var(--font-plex-sans);
+
+  --fs-display-1: clamp(2.625rem, 1.75rem + 3.5vw, 4.5rem);
+  --lh-display-1: 1.04;
+  --ls-display-1: -0.021em;
+
+  --fs-display-2: clamp(2rem, 1.5rem + 2vw, 3rem);
+  --lh-display-2: 1.1;
+  --ls-display-2: -0.016em;
+
+  --fs-display-3: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  --lh-display-3: 1.18;
+  --ls-display-3: -0.012em;
+
+  --fs-lede: 1.1875rem;
+  --lh-lede: 1.58;
+
+  --fs-body: 1rem;
+  --lh-body: 1.65;
+
+  --fs-small: 0.875rem;
+  --lh-small: 1.6;
+}
+
+:root:lang(ar) {
+  --display-active: var(--font-naskh);
+  --sans-active: var(--font-plex-arabic);
+
+  --fs-display-1: clamp(2.75rem, 1.85rem + 3.6vw, 4.75rem);
+  --lh-display-1: 1.42;
+  --ls-display-1: 0;
+
+  --fs-display-2: clamp(2.125rem, 1.6rem + 2.1vw, 3.1875rem);
+  --lh-display-2: 1.48;
+  --ls-display-2: 0;
+
+  --fs-display-3: clamp(1.625rem, 1.35rem + 1.05vw, 2.125rem);
+  --lh-display-3: 1.55;
+  --ls-display-3: 0;
+
+  --fs-lede: 1.3125rem;
+  --lh-lede: 1.9;
+
+  --fs-body: 1.0625rem;
+  --lh-body: 1.9;
+
+  --fs-small: 0.9375rem;
+  --lh-small: 1.85;
+}
+
+/* =============================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-ground);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Arabic numerals stay Latin-script throughout: Qatari business documents,
+     CR numbers and phone numbers are written with Western digits. */
+  :lang(ar) {
+    font-variant-numeric: lining-nums;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-text);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  hr {
+    border: 0;
+    border-block-start: 1px solid var(--color-edge);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 120ms !important;
+      transition-property: opacity !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* =============================================================================
+   Type utilities
+
+   Semantic rather than sized: `type-display-1`, not `text-6xl`. The size is a
+   consequence of the role, and the role is what changes between scripts.
+   ========================================================================== */
+
+@utility type-display-1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-display-1);
+  line-height: var(--lh-display-1);
+  letter-spacing: var(--ls-display-1);
+  text-wrap: balance;
+}
+
+@utility type-display-2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-display-2);
+  line-height: var(--lh-display-2);
+  letter-spacing: var(--ls-display-2);
+  text-wrap: balance;
+}
+
+@utility type-display-3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-display-3);
+  line-height: var(--lh-display-3);
+  letter-spacing: var(--ls-display-3);
+  text-wrap: balance;
+}
+
+@utility type-lede {
+  font-size: var(--fs-lede);
+  line-height: var(--lh-lede);
+  color: var(--color-fg-60);
+  text-wrap: pretty;
+}
+
+@utility type-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+@utility type-small {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+}
+
+@utility type-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+/* Arabic has no uppercase, and letter-spacing breaks its joined forms.
+   The eyebrow keeps its role and drops the mechanics that do not apply. */
+@layer utilities {
+  :lang(ar) .type-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}
+
+/* =============================================================================
+   Mashrabiya lattice
+
+   The only decorative motif in the system, and the only Qatari reference
+   beyond the maroon — the same diamond grid the logo mark is built from. A
+   fine screen at very low opacity, drawn in CSS and faded out with a mask so
+   it never competes with type. Used behind the hero and the closing call to
+   action. Nowhere else.
+   ========================================================================== */
+
+@utility lattice {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(45deg, var(--color-detail) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(-45deg, var(--color-detail) 0 1px, transparent 1px 22px);
+  opacity: var(--lattice-opacity);
+  mask-image: radial-gradient(
+    120% 100% at var(--lattice-origin-x, 100%) 0%,
+    #000 0%,
+    transparent 72%
+  );
+}
+
+:lang(ar) .lattice {
+  --lattice-origin-x: 0%;
+}
+
+/* =============================================================================
+   Theme control
+
+   Which icon and which label the theme button shows is decided here, from the
+   `data-resolved` attribute the pre-paint script sets — not from React state.
+   That keeps the button's markup identical on the server and the client, so
+   there is no hydration mismatch and no frame showing the wrong icon.
+
+   With JavaScript disabled no attribute is ever set, and the light-state icon
+   is what shows. The button does nothing in that case, which is honest: there
+   is no way to persist a preference either.
+   ========================================================================== */
+
+@layer utilities {
+  :root .theme-when-dark {
+    display: none;
+  }
+  :root[data-resolved='dark'] .theme-when-dark {
+    display: block;
+  }
+  :root[data-resolved='dark'] .theme-when-light {
+    display: none;
+  }
+}
