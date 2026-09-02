@@ -76,5 +76,9 @@
     "title": "Page not found",
     "body": "That page does not exist, or it has moved.",
     "action": "Back to home"
+  },
+  "splash": {
+    "subline": "Business services in Qatar",
+    "skip": "Press any key to skip"
   }
 }

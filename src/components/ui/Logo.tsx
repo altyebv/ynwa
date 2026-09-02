@@ -63,6 +63,10 @@ export function Mark({
  * rather than a startup, and keeping it as live text means it stays crisp at
  * every size and inherits the theme without a second asset.
  *
+ * `font-wordmark`, not `font-display`: the display face swaps to Noto Naskh on
+ * Arabic pages, and Naskh has Latin glyphs of its own, so the wordmark would
+ * silently be set in a different serif on /ar. A wordmark is a fixed object.
+ *
  * Latin in both locales on purpose: the mark is the mark. If the client has an
  * established Arabic name, an Arabic lockup sits beside this rather than
  * replacing it — transliterating "YNWA" into Arabic script would read as a
@@ -72,7 +76,7 @@ export function Wordmark({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        'font-display text-[1.375rem] leading-none font-medium tracking-[0.16em] text-fg',
+        'font-wordmark text-[1.375rem] leading-none font-medium tracking-[0.16em] text-fg',
         className,
       )}
       dir="ltr"

@@ -2,12 +2,13 @@ import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { routing, locales, localeDirection, type Locale } from '@/i18n/routing';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { SkipLink } from '@/components/ui/SkipLink';
-import { themeScript } from '@/lib/theme';
+import { Splash } from '@/components/layout/Splash';
+import { preflightScript } from '@/lib/theme';
 import { fontVariables } from '../fonts';
 import '../globals.css';
 
@@ -69,6 +70,7 @@ export default async function LocaleLayout({
 
   // Keeps every localized page statically rendered.
   setRequestLocale(locale);
+  const messages = await getMessages();
 
   return (
     <html
@@ -78,14 +80,14 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Sets the theme attributes before first paint. Without it, a visitor
-            who chose dark gets a flash of the light palette on every
-            navigation, because the choice lives in localStorage and the server
-            cannot see it. */}
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* Decides theme and splash before first paint. Without it a visitor
+            who chose dark gets a flash of the light palette, and a repeat
+            visitor gets a frame of a splash they have already seen. */}
+        <script dangerouslySetInnerHTML={{ __html: preflightScript }} />
       </head>
       <body className="flex min-h-dvh flex-col">
-        <NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>
+          <Splash />
           <SkipLink />
           <Navbar />
           <main id="main" className="flex-1">
