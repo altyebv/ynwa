@@ -12,7 +12,24 @@ import { preflightScript } from '@/lib/theme';
 import { fontVariables } from '../fonts';
 import '../globals.css';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ynwas.com';
+const defaultSiteUrl = 'https://ynwas.com';
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+
+function resolveSiteUrl(value: string | undefined) {
+  if (!value) return defaultSiteUrl;
+
+  try {
+    return new URL(value).origin;
+  } catch {
+    try {
+      return new URL(`https://${value}`).origin;
+    } catch {
+      return defaultSiteUrl;
+    }
+  }
+}
+
+const siteUrl = resolveSiteUrl(configuredSiteUrl);
 
 export const viewport: Viewport = {
   themeColor: [
