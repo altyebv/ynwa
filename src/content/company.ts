@@ -13,8 +13,7 @@ import type { L, Status, ContactChannel } from './types';
  */
 
 interface CompanyRecord {
-  /** Blocked: ynwas.com uses "Ynwa", "YNWA" and "Ynwas" interchangeably, and
-   *  the Instagram handle is @yanwaservices. One canonical form is needed. */
+  /** Settled: YNWA. See the note on the record. */
   legalName: { value: string; status: Status; note: string };
   displayName: string;
   domain: string;
@@ -38,8 +37,8 @@ interface CompanyRecord {
 export const company: CompanyRecord = {
   legalName: {
     value: 'YNWA',
-    status: 'blocked',
-    note: 'Canonical wordmark not confirmed. ynwas.com uses Ynwa / YNWA / Ynwas; Instagram is @yanwaservices; the domain is ynwas.com.',
+    status: 'confirmed',
+    note: 'Settled 2026-09-02. ynwas.com used Ynwa / YNWA / Ynwas interchangeably; YNWA is the canonical form and the wordmark. ynwas.com remains the domain, @yanwaservices remains the Instagram handle. Still open: whether the acronym should be expanded anywhere in copy.',
   },
   displayName: 'YNWA',
   domain: 'ynwas.com',
