@@ -16,10 +16,14 @@ export type L<T = string> = Record<Locale, T>;
  *   derived      taken verbatim from the existing ynwas.com. Publishable, but
  *                worth a second look before launch — the old site has its own
  *                errors, and repeating them is not the same as verifying them.
- *   placeholder  written by us to hold a shape. Renders in development with a
- *                visible marker, disappears in production.
- *   blocked      needs a fact nobody has given us. Never renders, and the
- *                production build fails if a live route can reach it.
+ *   placeholder  written by us to hold a shape. It DOES render in production
+ *                (see `publishable` below) and carries a development-only
+ *                marker, so the site reads as complete while the record stays
+ *                flagged internally for the client's copy review.
+ *   blocked      needs a fact nobody has given us — a number, a name, a date
+ *                that does not exist anywhere. Never renders, because there is
+ *                literally nothing to render; the production build fails if a
+ *                live route can reach it.
  */
 export type Status = 'confirmed' | 'derived' | 'placeholder' | 'blocked';
 
@@ -37,13 +41,22 @@ export interface Source {
   checked: string;
 }
 
-/** True when a record may appear on a production page. */
+/**
+ * True when a record may appear on a production page.
+ *
+ * `placeholder` used to be development-only, which left real gaps in the live
+ * site — a "how it works" section that simply was not there. The client's call
+ * (2026-09-04) is that the site should read as finished, with the unconfirmed
+ * copy tracked in the review list rather than withheld from the page. So
+ * placeholder now publishes, and `needsMarker` below still flags it in
+ * development so nobody mistakes it for confirmed.
+ *
+ * `blocked` is unchanged and is not a policy choice: those records are missing
+ * a value that does not exist anywhere (a founding year, a team size), so
+ * there is nothing to render even if we wanted to.
+ */
 export function publishable(record: Verifiable): boolean {
-  if (record.status === 'blocked') return false;
-  if (record.status === 'placeholder') {
-    return process.env.NODE_ENV !== 'production';
-  }
-  return true;
+  return record.status !== 'blocked';
 }
 
 /** Narrows a list to what may be rendered, preserving order. */

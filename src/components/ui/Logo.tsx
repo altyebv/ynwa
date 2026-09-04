@@ -76,7 +76,10 @@ export function Wordmark({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        'font-wordmark text-[1.375rem] leading-none font-medium tracking-[0.16em] text-fg',
+        // Steps down on a phone. At 22px with 0.16em tracking the lockup is
+        // ~117px, and the header only has room for it once the control cluster
+        // beside it has been paid for.
+        'font-wordmark text-[1.1875rem] leading-none font-medium tracking-[0.16em] text-fg sm:text-[1.375rem]',
         className,
       )}
       dir="ltr"
@@ -95,8 +98,11 @@ export function Logo({
   markClassName?: string;
 }) {
   return (
-    <span className={cn('inline-flex items-center gap-2.5', className)} dir="ltr">
-      <Mark className={cn('h-7 w-7 text-accent', markClassName)} />
+    <span
+      className={cn('inline-flex items-center gap-2 sm:gap-2.5', className)}
+      dir="ltr"
+    >
+      <Mark className={cn('h-6 w-6 text-accent sm:h-7 sm:w-7', markClassName)} />
       <Wordmark />
     </span>
   );

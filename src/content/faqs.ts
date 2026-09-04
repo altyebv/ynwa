@@ -107,8 +107,8 @@ export const faqs: Faq[] = [
     categoryId: 'company-formation',
     schemaEligible: false,
     featured: true,
-    status: 'blocked',
-    note: 'BLOCKED. Competitors publish concrete timelines and win on that specificity. This answer cannot improve until YNWA gives a real range per route. Highest-value single fact still missing.',
+    status: 'placeholder',
+    note: 'The answer above invents nothing — it is true, and it is what a competent adviser says before knowing the case. But it is not the answer the visitor came for. Competitors publish concrete timelines and win on that specificity. Unblocked from `blocked` to `placeholder` on 2026-09-04 so the question is at least answered on the page; it stays out of FAQPage markup, and it stays at the top of the client copy review until YNWA gives a real range per route.',
   },
   {
     id: 'what-documents',
@@ -122,8 +122,8 @@ export const faqs: Faq[] = [
     },
     categoryId: 'company-formation',
     schemaEligible: false,
-    status: 'blocked',
-    note: 'BLOCKED. A published, accurate document checklist per route would be the single strongest piece of content on this site and the best organic-search asset YNWA could own.',
+    status: 'placeholder',
+    note: 'Same as how-long: the answer is honest but generic. Unblocked to `placeholder` on 2026-09-04 so the question appears; not schema-eligible. A published, accurate document checklist per route would still be the single strongest piece of content on this site and the best organic-search asset YNWA could own.',
   },
   {
     id: 'what-is-pro',

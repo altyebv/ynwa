@@ -15,6 +15,13 @@ export const localeLabels: Record<Locale, string> = {
   ar: 'العربية',
 };
 
+/** The same names, short enough for a phone header. Still each language in its
+ *  own script — "AR" would be the language named in the language it is not. */
+export const localeShortLabels: Record<Locale, string> = {
+  en: 'EN',
+  ar: 'عربي',
+};
+
 export const routing = defineRouting({
   locales,
   defaultLocale: 'en',
