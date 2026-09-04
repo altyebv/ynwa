@@ -66,11 +66,28 @@
     "currentLanguage": "Current language",
     "homeLink": "YNWA — home",
     "switchToDark": "Switch to dark theme",
-    "switchToLight": "Switch to light theme"
+    "switchToLight": "Switch to light theme",
+    "breadcrumb": "Breadcrumb"
   },
-  "scaffold": {
-    "notice": "Phase A scaffold",
-    "body": "The shell, the design tokens and bilingual routing are in place. Page content lands in phase C."
+  "process": {
+    "eyebrow": "How it works",
+    "headline": "Four steps, in order — not four features arranged for symmetry."
+  },
+  "qatarFacts": {
+    "eyebrow": "Doing business in Qatar",
+    "headline": "A market built for foreign investment",
+    "cta": "Explore doing business in Qatar",
+    "sourceNote": "Figures as published by Invest Qatar."
+  },
+  "faq": {
+    "eyebrow": "Questions",
+    "headline": "Frequently asked questions",
+    "viewAll": "View all questions"
+  },
+  "closingCta": {
+    "eyebrow": "Get started",
+    "headline": "Let's take the paperwork off your plate.",
+    "lede": "Tell us what you are trying to do in Qatar, and we will tell you exactly what it takes."
   },
   "notFound": {
     "title": "Page not found",
@@ -80,5 +97,161 @@
   "splash": {
     "subline": "Business services in Qatar",
     "skip": "Press any key to skip"
+  },
+  "servicesPage": {
+    "metaTitle": "Services",
+    "metaDescription": "Company formation, PRO and government services, and corporate services in Qatar — the three stages of a company's life, and what YNWA handles at each.",
+    "eyebrow": "Services",
+    "headline": "Everything a company needs, from the first registration onward.",
+    "lede": "The work sorts into three stages: establishing a company, keeping it running, and building on what is there. Most clients arrive needing one of them and stay for the other two."
+  },
+  "categoryPage": {
+    "audience": "Who this is for",
+    "whatWeHandle": "What we handle",
+    "questionsEyebrow": "Questions",
+    "relatedQuestions": "Questions people ask at this stage",
+    "allQuestions": "All questions",
+    "otherStages": "The other two stages"
+  },
+  "qatarPage": {
+    "metaTitle": "Doing business in Qatar",
+    "metaDescription": "The four licensing routes into the Qatari market, the headline figures for foreign investors, and the official stages of setting up — every figure cited to its source.",
+    "eyebrow": "Doing business in Qatar",
+    "headline": "Four ways into the Qatari market, and how they differ.",
+    "lede": "Before the structure and before the paperwork there is a choice of licensing platform, and it decides most of what follows. Here is what each one is.",
+    "factsEyebrow": "The numbers",
+    "factsTitle": "What a foreign investor is working with",
+    "factsNote": "Figures as published by Invest Qatar. Sources are listed at the foot of this page.",
+    "routesEyebrow": "Licensing routes",
+    "routesTitle": "The four platforms",
+    "routesLede": "Each is a separate legal and regulatory environment, with its own permitted activities and its own registration process. Which one is right follows from what you intend to do, not from which is cheapest.",
+    "routeHandled": "We work with this route",
+    "routeAskUs": "Ask us about this route",
+    "stagesEyebrow": "The official path",
+    "stagesTitle": "How Invest Qatar describes setting up",
+    "stagesLede": "The national investment promotion agency publishes its own five stages. It is a useful map of the territory, and it is theirs rather than ours.",
+    "stagesNote": "Stages as published by Invest Qatar.",
+    "sourcesTitle": "Sources",
+    "sourcesLede": "Every figure and description on this page traces back to a primary source, with the date it was last checked against it. Rules change — look at the date.",
+    "checkedOn": "checked {date}"
+  },
+  "faqPage": {
+    "metaTitle": "Frequently asked questions",
+    "metaDescription": "Questions about company formation, licensing, PRO services and corporate compliance in Qatar, answered plainly and without invented numbers.",
+    "eyebrow": "Questions",
+    "headline": "Frequently asked questions",
+    "lede": "The questions that come up before the first conversation. Where the answer genuinely depends on your licensing route or your activity, it says so rather than picking one for you.",
+    "generalTitle": "Before you decide anything",
+    "closingHeadline": "Still not sure which of these is your situation?",
+    "closingLede": "Tell us what you are trying to do in Qatar, and we will tell you which route it points to."
+  },
+  "contactPage": {
+    "metaTitle": "Contact",
+    "metaDescription": "Talk to YNWA about establishing, running or restructuring a company in Qatar. Office in Doha, by phone, email or the enquiry form.",
+    "eyebrow": "Contact",
+    "headline": "Tell us what you are trying to do.",
+    "lede": "Not which forms you think you need — what you are trying to achieve. The route, the structure and the paperwork follow from that, and working them out is our job rather than yours.",
+    "formTitle": "Send an enquiry",
+    "formLede": "The more you can say about the activity and where you are starting from, the more specific our first answer can be.",
+    "nameLabel": "Your name",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "optional": "optional",
+    "stageLabel": "What is this about?",
+    "stageStart": "Starting a company in Qatar",
+    "stageOperate": "Running a company that is already registered",
+    "stageGrow": "Restructuring, protecting or expanding",
+    "stageUnsure": "I am not sure yet",
+    "messageLabel": "What are you trying to do?",
+    "messageHint": "the activity, and where you are starting from",
+    "submit": "Send enquiry",
+    "sending": "Sending…",
+    "privacyNote": "We use what you send only to answer you.",
+    "honeypotLabel": "Leave this field empty",
+    "successEyebrow": "Received",
+    "successTitle": "Thank you — your enquiry is with us.",
+    "successBody": "We will come back to you at the address you gave. If it is urgent, the office number above reaches someone directly.",
+    "notConnected": "Our enquiry form is not connected yet, so this did not send. Please reach us directly:",
+    "sendFailed": "Something went wrong sending that, and we would rather tell you than lose it. Please reach us directly:",
+    "errors": {
+      "required": "This one is needed.",
+      "invalid": "That does not look right — please check it.",
+      "tooShort": "A little more detail, please.",
+      "tooLong": "That is longer than the form accepts."
+    }
+  },
+  "aboutPage": {
+    "metaTitle": "About",
+    "metaDescription": "YNWA is a Doha-based business services firm handling company formation, licensing, PRO and government processes, and ongoing corporate compliance in Qatar.",
+    "eyebrow": "About",
+    "headline": "The administrative side of a company, handled.",
+    "lede": "YNWA is a business services firm in Doha. We deal with the registrations, licences, government processes and compliance that a company in Qatar needs — so the people running it can run it.",
+    "thesisEyebrow": "How we see the work",
+    "thesisTitle": "One relationship, not three transactions.",
+    "thesisBody": "Most firms in this market sell company formation. Formation happens once. What happens for the rest of a company's life is renewals, amendments, labour and immigration files, attestations, activity changes, partner changes — and then, when things go well, structuring and protecting what has been built.",
+    "thesisBody2": "We are organised around that whole span rather than around the first transaction in it, which is why the services here are sorted into Start, Operate and Grow instead of into a filing cabinet. Most clients arrive needing one of the three and stay for the other two.",
+    "workEyebrow": "How we work",
+    "workTitle": "Four steps, in order.",
+    "scopeEyebrow": "Scope",
+    "scopeTitle": "What we do, and where that stops.",
+    "scopeBody": "Our work is administrative and procedural: identifying the licensing route and the approvals that apply, preparing and submitting the paperwork, dealing with the departments, and following it through. Where a matter needs legal advice or representation, that is a lawyer's work and we will say so rather than take it on.",
+    "whereTitle": "Where we are",
+    "nameTitle": "The name",
+    "nameBody": "{name} is a Doha business services firm. The initials are borrowed from a phrase about not walking alone — which, applied to paperwork, is the entire proposition."
+  },
+  "insightsPage": {
+    "metaTitle": "Insights",
+    "metaDescription": "Notes on company formation, licensing and government process in Qatar. Nothing published yet.",
+    "eyebrow": "Insights",
+    "headline": "Notes on doing business in Qatar.",
+    "lede": "Practical writing about licensing routes, registrations and the processes behind them — for people who would rather understand the system than be handled by it.",
+    "emptyEyebrow": "Nothing here yet",
+    "emptyTitle": "The first pieces are still being written.",
+    "emptyBody": "Rather than fill this page with something we have not written, here is where the useful material already is.",
+    "meanwhile": "Anything you cannot find an answer to,"
+  },
+  "privacyPage": {
+    "metaTitle": "Privacy",
+    "metaDescription": "What YNWA's website collects, why, and what it stores in your browser.",
+    "eyebrow": "Privacy",
+    "headline": "Privacy notice",
+    "lede": "What this website collects, why it collects it, and what it keeps in your browser. It is short because the site does very little.",
+    "updated": "Last updated 4 September 2026",
+    "s1title": "Who this is from",
+    "s1body": "This notice covers ynwas.com, operated by YNWA, a business services firm in Doha, Qatar. Our contact details are on the contact page and in the footer of every page.",
+    "s2title": "What we collect",
+    "s2body": "Only what you type into the enquiry form: your name, your email address, your phone number if you choose to give it, which stage of a company's life your enquiry is about, and your message. Our hosting provider also keeps standard server logs, which record requests to the site and typically include an IP address.",
+    "s3title": "Why we collect it",
+    "s3body": "To read your enquiry and answer it. That is the only purpose. We do not use it for marketing, we do not sell or share it with anyone for their own purposes, and we do not use it to build a profile of you.",
+    "s4title": "Tracking and advertising",
+    "s4body": "This site carries no advertising, no advertising or social media pixels, and no third-party analytics. Nothing on it follows you to other websites.",
+    "s5title": "What the site stores in your browser",
+    "s5body": "Two small values, and no cookies. Your light or dark theme choice is kept in your browser's local storage so the site does not flash the wrong palette on your next visit, and a marker that you have already seen the opening animation is kept for the length of your browsing session. Both stay in your browser, are never sent to us, and clearing your site data removes them.",
+    "s6title": "How long we keep enquiries",
+    "s6body": "We keep an enquiry and our correspondence about it for as long as we are dealing with it and for a reasonable period afterwards, in case you come back to us about the same matter. If you would like yours deleted sooner, ask and we will delete it.",
+    "s7title": "Asking us about your information",
+    "s7body": "Write to us at the email address on the contact page to ask what we hold about you, to have it corrected, or to have it deleted. We will respond to you directly.",
+    "reviewNote": "This notice describes how the website actually behaves, and is written to be accurate rather than to cover every eventuality. It has not been reviewed by a lawyer, and it does not attempt to state obligations under any particular data protection law. Have it reviewed before launch."
+  },
+  "termsPage": {
+    "metaTitle": "Terms",
+    "metaDescription": "Terms of use for the YNWA website.",
+    "eyebrow": "Terms",
+    "headline": "Terms of use",
+    "lede": "The terms on which this website is offered. They cover the site itself, not any engagement between you and YNWA.",
+    "updated": "Last updated 4 September 2026",
+    "s1title": "About this site",
+    "s1body": "ynwas.com is published by YNWA, a business services firm in Doha, Qatar, to describe what we do and to let people get in touch. Using the site means accepting these terms.",
+    "s2title": "Information here is general",
+    "s2body": "What is written here describes services and processes in general terms. It is not advice on your situation, and it is not legal advice at all — our work is administrative and procedural, not legal practice. Nothing on this site should be relied on as a substitute for advice about your own case, and requirements in Qatar change.",
+    "s3title": "Sources and external links",
+    "s3body": "Where this site states a fact about Qatar it cites a primary source and the date it was last checked against it. Those sources are published by other organisations, and neither their content nor their continued accuracy is under our control. Check the date, and check the source.",
+    "s4title": "Sending an enquiry",
+    "s4body": "Sending an enquiry, and our replying to it, does not by itself create an engagement between us or any obligation on either side. An engagement begins when it is agreed separately and in writing.",
+    "s5title": "The content of this site",
+    "s5body": "The text, design, code and marks on this site belong to YNWA unless stated otherwise. You are welcome to read, quote and link to it; please do not republish it as your own.",
+    "s6title": "Changes",
+    "s6body": "We may change these terms, and the site itself, at any time. The date above tells you when this version was published.",
+    "reviewNote": "These terms are written to be accurate about what this website is and does, and deliberately do not attempt liability limits, governing-law clauses or dispute-resolution provisions. They have not been reviewed by a lawyer. Have them reviewed before launch."
   }
 }
