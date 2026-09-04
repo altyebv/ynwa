@@ -9,27 +9,9 @@ import { Footer } from '@/components/layout/Footer';
 import { SkipLink } from '@/components/ui/SkipLink';
 import { Splash } from '@/components/layout/Splash';
 import { preflightScript } from '@/lib/theme';
+import { siteUrl } from '@/lib/site';
 import { fontVariables } from '../fonts';
 import '../globals.css';
-
-const defaultSiteUrl = 'https://ynwas.com';
-const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-
-function resolveSiteUrl(value: string | undefined) {
-  if (!value) return defaultSiteUrl;
-
-  try {
-    return new URL(value).origin;
-  } catch {
-    try {
-      return new URL(`https://${value}`).origin;
-    } catch {
-      return defaultSiteUrl;
-    }
-  }
-}
-
-const siteUrl = resolveSiteUrl(configuredSiteUrl);
 
 export const viewport: Viewport = {
   themeColor: [

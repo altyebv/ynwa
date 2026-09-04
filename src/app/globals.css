@@ -266,6 +266,28 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+
+    /* The header is sticky and 72px tall, so an in-page anchor scrolled to the
+       top of the viewport lands underneath it. This offsets every anchor jump
+       — `#main` from the skip link, FAQ deep links, anything later — by the
+       header's height plus a little air. Keep in sync with `h-18` on <header>. */
+    scroll-padding-block-start: 5.5rem;
+
+    /* Guard, not a fix in itself: nothing in the system should legitimately
+       need horizontal scroll, so anything that overflows the inline axis
+       (a fixed/absolute element wider than the viewport, a stray 100vw) is
+       clipped here rather than widening the page. Set on `html` and not
+       `body` deliberately — overflow on the root propagates straight to the
+       viewport instead of creating a second nested scroll container, so
+       `position: sticky` on the header keeps tracking the real viewport. */
+    overflow-x: hidden;
+
+    /* Consequence of the line above: because the root's overflow is no longer
+       `visible`, the root — not the body — is what owns viewport scrolling.
+       That means the drawer's scroll lock has to be applied here (see Navbar),
+       and reserving the scrollbar's width up front is what stops that lock
+       from shifting the whole page sideways when it lands. */
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -368,6 +390,21 @@
   line-height: var(--lh-small);
 }
 
+/* A figure standing on its own in a narrow tile — the Qatar facts strip, and
+   any stat block after it. Deliberately NOT type-display-3: those tiles get as
+   narrow as ~95px of content on a 320px phone, and display-3's 24px floor sets
+   a word like "restrictions" wider than that. This tops out at 28px, which is
+   the largest size that still fits the longest value in the tightest column
+   the grid produces (five across at 1024px). */
+@utility type-stat {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 0.9rem + 1.6vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
 @utility type-eyebrow {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
@@ -385,6 +422,89 @@
     font-size: 0.8125rem;
     letter-spacing: 0;
     text-transform: none;
+  }
+
+  /* Same ~8% optical correction the rest of the Arabic scale carries, and no
+     negative tracking — it breaks the joined forms. The Arabic stat values are
+     short, so the extra size costs nothing in fit. */
+  :lang(ar) .type-stat {
+    font-size: clamp(1.375rem, 1rem + 1.7vw, 1.875rem);
+    line-height: 1.45;
+    letter-spacing: 0;
+  }
+}
+
+/* =============================================================================
+   Hairline grid
+
+   The pattern is: a container filled with the rule colour, `gap: 1px`, and
+   opaque children — so the gaps read as hairlines without every cell having to
+   negotiate which of its four borders is a duplicate.
+
+   Its one failure mode is an item count that does not divide by the column
+   count. The leftover space in the final row is not a cell, so nothing paints
+   over the container, and the rule colour shows through as a solid block. Five
+   facts in a two-column grid on a phone is exactly that case.
+
+   This stretches the last item across whatever is left of its row, at each of
+   the column counts the site actually uses. Written against `:nth-child`
+   position rather than a fixed item count, so adding or removing a record
+   cannot reintroduce the block.
+   ========================================================================== */
+
+@utility hairline-grid {
+  display: grid;
+  gap: 1px;
+  background-color: var(--color-edge);
+  border: 1px solid var(--color-edge);
+
+  /* 1 across. Below ~350px two of these tiles leave about 87px of content
+     each, and both "Profit repatriation" and "No restrictions" are wider than
+     that at any type size the tile can honestly use. Measured, not guessed:
+     one column is the only thing that fits an old 320px phone. */
+  grid-template-columns: minmax(0, 1fr);
+
+  /* 2 across */
+  @media (width >= 22rem) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    & > *:last-child:nth-child(odd) {
+      grid-column: span 2;
+    }
+  }
+
+  /* 3 across */
+  @media (width >= 40rem) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    & > *:last-child:nth-child(odd) {
+      grid-column: auto;
+    }
+    & > *:last-child:nth-child(3n + 1) {
+      grid-column: span 3;
+    }
+    & > *:last-child:nth-child(3n + 2) {
+      grid-column: span 2;
+    }
+  }
+
+  /* 5 across */
+  @media (width >= 64rem) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    & > *:last-child:nth-child(3n + 1),
+    & > *:last-child:nth-child(3n + 2) {
+      grid-column: auto;
+    }
+    & > *:last-child:nth-child(5n + 1) {
+      grid-column: span 5;
+    }
+    & > *:last-child:nth-child(5n + 2) {
+      grid-column: span 4;
+    }
+    & > *:last-child:nth-child(5n + 3) {
+      grid-column: span 3;
+    }
+    & > *:last-child:nth-child(5n + 4) {
+      grid-column: span 2;
+    }
   }
 }
 
@@ -472,7 +592,17 @@
   background-color: var(--color-ground);
   display: grid;
   place-items: center;
-  padding: 24px;
+  /* Narrower gutters on a phone, where every pixel goes to the one line of
+     type below. */
+  padding: clamp(16px, 4vw, 24px);
+  /* The unfurled phrase is one un-wrapping line (see .st below) and on a
+     narrow phone it can run wider than the viewport before the font-size
+     clamp catches up. Fixed-position content that overflows its box still
+     widens the document's scrollable area in most browsers even though the
+     box itself is pinned, which is what was producing the mobile horizontal
+     scroll — clip it here so the splash can never do that, independent of
+     exactly how the width math works out on any given device. */
+  overflow: hidden;
   animation: splash-out 660ms var(--ease-institutional) 4680ms forwards;
 }
 
@@ -530,7 +660,19 @@
   column-gap: 0;
   font-family: var(--font-wordmark);
   font-weight: 400;
-  font-size: clamp(2rem, 1.2rem + 3.2vw, 3.5rem);
+  /* Two constraints, and the smaller wins.
+     
+     The clamp is the aesthetic one: how big the phrase should be at a given
+     viewport. The `min()` term is the mechanical one: the unfurled phrase is a
+     single non-wrapping line roughly 12em wide (four capitals, four tails
+     capped at 2.4em each, three word gaps and the open tracking), and it has
+     to fit inside the viewport less this element's own padding. Solving
+     12.5em <= 100vw - 32px gives 8vw - 0.16rem, so below ~430px the mechanical
+     term takes over and the line scales with the phone instead of being
+     clipped by the `overflow: hidden` above. That overflow rule stays as the
+     guard of last resort — it is what stops any residual overshoot from
+     widening the document — but it should no longer be doing any work. */
+  font-size: min(clamp(1.5rem, 0.95rem + 3.6vw, 3.5rem), 8vw - 0.16rem);
   line-height: 1;
   letter-spacing: 0.16em;
   color: var(--color-fg);
