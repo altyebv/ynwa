@@ -31,7 +31,7 @@ export function Footer() {
                 href={instagram.value}
                 rel="noreferrer noopener"
                 target="_blank"
-                className="mt-4 inline-block type-small text-fg-60 transition-colors duration-200 hover:text-fg"
+                className="mt-4 inline-flex min-h-6 items-center type-small text-fg-60 transition-colors duration-200 hover:text-fg"
               >
                 {instagram.display}
               </a>
@@ -40,13 +40,13 @@ export function Footer() {
 
           <div className="md:col-span-3">
             <h2 className="type-eyebrow text-fg-40">{t('contact')}</h2>
-            <ul className="mt-4 flex flex-col gap-2">
+            <ul className="mt-4 flex flex-col gap-1">
               {contactable.map((c) => (
                 <li key={c.value}>
                   <a
                     href={channelHref(c)}
                     dir={c.kind === 'email' ? undefined : 'ltr'}
-                    className="type-small text-fg-60 transition-colors duration-200 hover:text-fg"
+                    className="inline-flex min-h-6 items-center type-small text-fg-60 transition-colors duration-200 hover:text-fg"
                   >
                     {c.display}
                   </a>
@@ -62,12 +62,12 @@ export function Footer() {
             className="md:col-span-3 md:col-start-9"
           >
             <h2 className="type-eyebrow text-fg-40">{t('explore')}</h2>
-            <ul className="mt-4 flex flex-col gap-2">
+            <ul className="mt-4 flex flex-col gap-1">
               {footerNav.map((item) => (
                 <li key={item.key}>
                   <Link
                     href={item.href}
-                    className="type-small text-fg-60 transition-colors duration-200 hover:text-fg"
+                    className="inline-flex min-h-6 items-center type-small text-fg-60 transition-colors duration-200 hover:text-fg"
                   >
                     {tn(item.key)}
                   </Link>
@@ -93,7 +93,7 @@ export function Footer() {
             <li>
               <Link
                 href="/legal/privacy"
-                className="type-small text-fg-40 transition-colors duration-200 hover:text-fg"
+                className="inline-flex min-h-6 items-center type-small text-fg-40 transition-colors duration-200 hover:text-fg"
               >
                 {t('privacy')}
               </Link>
@@ -101,7 +101,7 @@ export function Footer() {
             <li>
               <Link
                 href="/legal/terms"
-                className="type-small text-fg-40 transition-colors duration-200 hover:text-fg"
+                className="inline-flex min-h-6 items-center type-small text-fg-40 transition-colors duration-200 hover:text-fg"
               >
                 {t('terms')}
               </Link>

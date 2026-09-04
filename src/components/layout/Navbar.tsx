@@ -8,26 +8,10 @@ import { channel, channelHref } from '@/content/company';
 import { Container } from '@/components/ui/Container';
 import { ButtonLink } from '@/components/ui/Button';
 import { Logo } from '@/components/ui/Logo';
+import { Chevron } from '@/components/ui/Chevron';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { ThemeToggle } from './ThemeToggle';
 import { cn } from '@/lib/cn';
-
-function Chevron({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 12 12"
-      aria-hidden="true"
-      className={cn('h-3 w-3 shrink-0', className)}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 4.5 6 7.5 9 4.5" />
-    </svg>
-  );
-}
 
 /** Points along the reading direction: right in English, left in Arabic. */
 function Arrow({ className }: { className?: string }) {
@@ -77,10 +61,23 @@ export function Navbar() {
     setDrawerOpen(false);
   }
 
+  // Scroll lock goes on <html>, not <body>.
+  //
+  // `body { overflow: hidden }` only stops the page scrolling while the root
+  // element's own overflow is `visible`, because that is the condition under
+  // which the body's overflow is the thing propagated to the viewport.
+  // globals.css sets `overflow-x: hidden` on <html> as an overflow guard, so
+  // the root is no longer visible and it is the root that now owns viewport
+  // scrolling — a body-level lock silently stopped doing anything. Setting it
+  // here, and clearing the inline style afterwards so the stylesheet's
+  // `overflow-x: hidden` comes back. `scrollbar-gutter: stable` in globals.css
+  // is what keeps this from shifting the layout when the scrollbar goes.
   useEffect(() => {
-    document.body.style.overflow = drawerOpen ? 'hidden' : '';
+    const root = document.documentElement;
+    if (drawerOpen) root.style.overflow = 'hidden';
+    else root.style.removeProperty('overflow');
     return () => {
-      document.body.style.overflow = '';
+      root.style.removeProperty('overflow');
     };
   }, [drawerOpen]);
 
@@ -114,7 +111,7 @@ export function Navbar() {
         scrolled ? 'border-edge shadow-header' : 'border-transparent',
       )}
     >
-      <Container className="flex h-18 items-center gap-6">
+      <Container className="flex h-18 items-center gap-2 sm:gap-3 xl:gap-6">
         <Link
           href="/"
           aria-label={ta('homeLink')}
@@ -126,7 +123,7 @@ export function Navbar() {
         {/* ---- desktop navigation ---- */}
         <nav
           aria-label={ta('mainNavigation')}
-          className="hidden flex-1 items-center gap-1 lg:flex"
+          className="hidden min-w-0 flex-1 items-center gap-1 xl:flex"
         >
           {primaryNav.map((item) =>
             item.children ? (
@@ -201,12 +198,15 @@ export function Navbar() {
         </nav>
 
         {/* ---- desktop actions ---- */}
-        <div className="ms-auto hidden items-center gap-4 lg:flex">
+        {/* shrink-0 so a future addition here overflows visibly instead of
+            quietly squashing the icon buttons, which is exactly how the 1024px
+            problem hid itself. */}
+        <div className="ms-auto hidden shrink-0 items-center gap-4 xl:flex">
           {office && (
             <a
               href={channelHref(office)}
               dir="ltr"
-              className="font-mono text-[0.8125rem] text-fg-60 transition-colors duration-200 hover:text-fg"
+              className="inline-flex min-h-6 items-center font-mono text-[0.8125rem] text-fg-60 transition-colors duration-200 hover:text-fg"
             >
               {office.display}
             </a>
@@ -216,10 +216,16 @@ export function Navbar() {
           <ButtonLink href="/contact">{tcta('primary')}</ButtonLink>
         </div>
 
-        {/* ---- mobile trigger ---- */}
-        <div className="ms-auto flex items-center gap-2 lg:hidden">
-          <ThemeToggle />
-          <LanguageSwitcher />
+        {/* ---- mobile trigger ----------------------------------------------
+            Three controls plus the lockup did not fit: at 360px the row needs
+            ~366px, so the flex items were shrinking and the icon buttons were
+            visibly squashed. The theme toggle moves into the drawer (it is a
+            preference, not navigation) and the language control goes compact,
+            which brings the row to ~250px and leaves the smallest phones room
+            to spare. `shrink-0` makes any future regression here a visible
+            overflow rather than a silent squash. ------------------------- */}
+        <div className="ms-auto flex shrink-0 items-center gap-1.5 sm:gap-2 xl:hidden">
+          <LanguageSwitcher compact />
           <button
             type="button"
             onClick={() => setDrawerOpen(true)}
@@ -250,7 +256,7 @@ export function Navbar() {
           instead of the viewport. Slides from the inline-end edge, so it
           mirrors for free in Arabic. ------------------------------------ */}
       {drawerOpen && (
-        <div className="fixed inset-0 z-60 lg:hidden">
+        <div className="fixed inset-0 z-60 xl:hidden">
           <button
             type="button"
             aria-label={ta('closeMenu')}
@@ -258,26 +264,30 @@ export function Navbar() {
             className="absolute inset-0 bg-black/50"
           />
           <div className="absolute inset-y-0 end-0 flex w-[min(22rem,88vw)] flex-col overflow-y-auto border-s border-edge bg-ground">
-            <div className="flex h-18 shrink-0 items-center justify-between border-b border-edge px-6">
+            <div className="flex h-18 shrink-0 items-center justify-between gap-3 border-b border-edge px-6">
               <Logo />
-              <button
-                type="button"
-                onClick={() => setDrawerOpen(false)}
-                aria-label={ta('closeMenu')}
-                className="flex h-10 w-10 items-center justify-center rounded-xs border border-fg/15 text-fg"
-              >
-                <svg
-                  viewBox="0 0 20 20"
-                  aria-hidden="true"
-                  className="h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
+              <div className="flex items-center gap-2">
+                {/* Lives here below xl — see the note on the trigger cluster. */}
+                <ThemeToggle />
+                <button
+                  type="button"
+                  onClick={() => setDrawerOpen(false)}
+                  aria-label={ta('closeMenu')}
+                  className="flex h-10 w-10 items-center justify-center rounded-xs border border-fg/15 text-fg"
                 >
-                  <path d="M5 5l10 10M15 5L5 15" />
-                </svg>
-              </button>
+                  <svg
+                    viewBox="0 0 20 20"
+                    aria-hidden="true"
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  >
+                    <path d="M5 5l10 10M15 5L5 15" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
             <nav aria-label={ta('mainNavigation')} className="flex flex-col p-6">

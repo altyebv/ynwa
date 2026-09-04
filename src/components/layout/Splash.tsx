@@ -44,16 +44,18 @@ export function Splash() {
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    // Already seen in this tab: the pre-paint script hid it, so just drop it.
+    // Already seen in this tab? The pre-paint script set data-splash="skip" and
+    // CSS took the overlay off screen before the first paint, so there is
+    // nothing to hide — only a dead node to remove. That removal goes through
+    // the same timer as the normal path, at 0ms instead of the full runtime:
+    // one code path, and the setState happens in a timer callback rather than
+    // synchronously in the effect body, which is what
+    // `react-hooks/set-state-in-effect` is asking for.
     let seen = false;
     try {
       seen = Boolean(sessionStorage.getItem(SPLASH_KEY));
     } catch {
       /* private mode — the splash simply plays every time */
-    }
-    if (seen) {
-      setVisible(false);
-      return;
     }
 
     const markSeen = () => {
@@ -75,11 +77,14 @@ export function Splash() {
     // and aimed at is not a skip control.
     const onKey = () => dismiss();
     const onPointer = () => dismiss();
-    const timer = window.setTimeout(() => {
-      markSeen();
-      setVisible(false);
-      cleanup();
-    }, SPLASH_TOTAL);
+    const timer = window.setTimeout(
+      () => {
+        markSeen();
+        setVisible(false);
+        cleanup();
+      },
+      seen ? 0 : SPLASH_TOTAL,
+    );
 
     function cleanup() {
       window.clearTimeout(timer);
