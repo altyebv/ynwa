@@ -3,107 +3,40 @@ import { cn } from '@/lib/cn';
 /**
  * YNWA identity.
  *
- * The mark is three concentric figures on the mashrabiya diamond — the same
- * geometry as the lattice motif in globals.css, so the logo and the site's
- * texture are demonstrably one system rather than two decisions.
+ * The supplied master is `public/assets/ynwa-logo.png`: the four letters drawn
+ * as one folded ribbon. What ships is `ynwa-wordmark.png`, the same artwork
+ * trimmed of its transparent margin (1732×908 of canvas around 1469×588 of
+ * drawing, which would otherwise have to be paid for in layout) and resized to
+ * 3x its largest rendered height. 371KB down to 6.3KB, same pixels.
  *
- * It reads as a seal or an aperture, and the three figures are the three
- * stages of the proposition:
+ * The lockup is now the whole identity — it replaced a mark-plus-set-wordmark
+ * pair, so the diamond mark and the Newsreader wordmark that used to live in
+ * this file are gone with it. The diamond survives where it is still the right
+ * figure: `app/icon.svg` for the favicon, and the drawn-on reveal in Splash.
  *
- *   outer diamond   Start     the market, entered from outside
- *   inner diamond   Operate   the company inside it
- *   solid square    Grow      the settled, registered form — the only
- *                             axis-aligned figure in the mark, because
- *                             squared-away is the whole point of the service
- *
- * Monochrome by default (`currentColor`) so it works in ink, in the accent, on
- * a dark ground, in a fax, and at 16px. The `accent` variant tints only the
- * innermost square, which is the one element that survives at favicon size.
+ * See `.wordmark-img` in globals.css for why this is inverted in the light
+ * theme. The short version is that the artwork is near-white and the page is
+ * not.
  */
-export function Mark({
-  className,
-  accent = false,
-}: {
-  className?: string;
-  accent?: boolean;
-}) {
+export function Logo({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 32 32"
-      role="presentation"
-      aria-hidden="true"
-      className={cn('h-8 w-8', className)}
-      fill="none"
-    >
-      <path
-        d="M16 1.6 30.4 16 16 30.4 1.6 16Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="miter"
-      />
-      <path
-        d="M16 7 25 16 16 25 7 16Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="miter"
-      />
-      <rect
-        x="12.5"
-        y="12.5"
-        width="7"
-        height="7"
-        fill={accent ? 'var(--color-accent)' : 'currentColor'}
-      />
-    </svg>
-  );
-}
-
-/**
- * Set, not drawn. Newsreader at 500 with wide tracking reads as an institution
- * rather than a startup, and keeping it as live text means it stays crisp at
- * every size and inherits the theme without a second asset.
- *
- * `font-wordmark`, not `font-display`: the display face swaps to Noto Naskh on
- * Arabic pages, and Naskh has Latin glyphs of its own, so the wordmark would
- * silently be set in a different serif on /ar. A wordmark is a fixed object.
- *
- * Latin in both locales on purpose: the mark is the mark. If the client has an
- * established Arabic name, an Arabic lockup sits beside this rather than
- * replacing it — transliterating "YNWA" into Arabic script would read as a
- * foreign company badly localised, which is the opposite of the goal.
- */
-export function Wordmark({ className }: { className?: string }) {
-  return (
-    <span
-      className={cn(
-        // Steps down on a phone. At 22px with 0.16em tracking the lockup is
-        // ~117px, and the header only has room for it once the control cluster
-        // beside it has been paid for.
-        'font-wordmark text-[1.1875rem] leading-none font-medium tracking-[0.16em] text-fg sm:text-[1.375rem]',
-        className,
-      )}
-      dir="ltr"
-    >
-      YNWA
-    </span>
-  );
-}
-
-/** Mark and wordmark locked up. Always ltr — a logo does not mirror. */
-export function Logo({
-  className,
-  markClassName,
-}: {
-  className?: string;
-  markClassName?: string;
-}) {
-  return (
-    <span
-      className={cn('inline-flex items-center gap-2 sm:gap-2.5', className)}
-      dir="ltr"
-    >
-      <Mark className={cn('h-6 w-6 text-accent sm:h-7 sm:w-7', markClassName)} />
-      <Wordmark />
-    </span>
+    // Plain <img>, not next/image: at 6KB there is nothing to optimise away,
+    // and the header's logo is the one image on the page that must never be
+    // lazy, resized or deferred. Width and height are the file's own, so the
+    // box is reserved before it loads.
+    /* eslint-disable-next-line @next/next/no-img-element */
+    <img
+      src="/assets/ynwa-wordmark.png"
+      // The header wraps this in a link that carries its own aria-label, which
+      // wins over anything in here; the footer and the drawer do not, and this
+      // is what names them.
+      alt="YNWA"
+      width={210}
+      height={84}
+      decoding="async"
+      // Taller than the set wordmark it replaced. The ribbon folds carry the
+      // letterforms here, and below about 32px they close up into a texture.
+      className={cn('wordmark-img h-8 w-auto sm:h-9', className)}
+    />
   );
 }

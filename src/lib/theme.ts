@@ -25,6 +25,22 @@ export const SPLASH_TOTAL = 5340;
  * before anything is painted. sessionStorage, not localStorage: the reveal
  * should happen once per visit, not once per lifetime.
  *
+ * HERO — whether this visitor gets the homepage hero's footage at all. Two
+ * disqualifiers, both of which HeroVideo would otherwise have to discover
+ * after hydration: a reduced-motion preference, and a connection that has
+ * asked not to be spent (Data Saver, or 3G and below).
+ *
+ * It is decided here for the same reason the other two are. Below `xl` the
+ * hero reserves 320px under the buttons for the video's band to rise into,
+ * and with no video that padding is a 320px hole. Choosing after hydration
+ * means the hole is painted and then closed — a 320px layout shift on the
+ * page most likely to be somebody's first. Setting
+ *   data-hero="video"
+ * before the first paint lets CSS reserve the space only when something is
+ * going to fill it. The one case it cannot predict is an autoplay refused by
+ * the device after all; the space is reserved and stays empty, which is a far
+ * smaller wrong than shifting the page for everyone.
+ *
  * Deciding here rather than in React matters — a component that hides the
  * splash after hydration would show it for a frame to every repeat visitor.
  */
@@ -34,4 +50,7 @@ var d=s==='dark'||s==='light'?s==='dark':matchMedia('(prefers-color-scheme: dark
 if(s==='dark'||s==='light')document.documentElement.dataset.theme=s;
 document.documentElement.dataset.resolved=d?'dark':'light';
 if(sessionStorage.getItem('${SPLASH_KEY}'))document.documentElement.dataset.splash='skip';
+var c=navigator.connection||{};
+var thrifty=c.saveData===true||/^(slow-2g|2g|3g)$/.test(c.effectiveType||'');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!thrifty)document.documentElement.dataset.hero='video';
 }catch(e){}})()`;
