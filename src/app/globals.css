@@ -58,6 +58,11 @@
 
   /* --- decorative ------------------------------------------------------ */
   --lattice-opacity: 0.16;
+  /* Veil over the hero footage, in the page's own ground colour — see
+     "Hero media" below. Dark mode carries a heavier one for the same reason
+     the lattice is lighter there: an ink page has far less tolerance for a
+     bright moving rectangle than a bone one does. */
+  --hero-veil: 0.19;
 }
 
 /* The un-stamped document is the common case: most visitors never touch a
@@ -98,6 +103,7 @@
     --t-critical: #d9695f;
 
     --lattice-opacity: 0.1;
+    --hero-veil: 0.38;
   }
 }
 
@@ -133,6 +139,7 @@
   --t-critical: #d9695f;
 
   --lattice-opacity: 0.1;
+  --hero-veil: 0.38;
 }
 
 /* Colours are `inline` so the utilities point at the live variables and
@@ -538,6 +545,157 @@
 }
 
 /* =============================================================================
+   Hero media
+
+   The homepage hero's footage, under the lattice above and the type above that.
+   Two files, one per orientation — 1280x720 beside a desktop text column,
+   720x1280 behind a phone — picked in HeroVideo.tsx so only one is ever
+   fetched. That file owns whether there is a video; this one owns where it is
+   allowed to be.
+
+   The rule every mask below exists to keep: TYPE NEVER SITS ON THE FOOTAGE.
+
+   The tempting alternative is to flood the hero and scrim it until the text is
+   legible, and it cannot be made safe. A veil tuned for one frame is the wrong
+   veil for the next, because the footage is not a controlled background: a
+   bright frame under a 0.46 ink veil leaves #ede9e2 body text at about 3.4:1,
+   under AA, and the only fix is a veil heavy enough that there was no point
+   showing video. So each breakpoint masks the footage out of the region the
+   type occupies instead, and the contrast ratios measured at the top of this
+   file stay true — AA becomes a property of the layout rather than a bet on
+   what is in shot.
+
+   A wide screen gets a field anchored to the trailing edge, beside the text
+   column. Everything narrower puts the same field below the type instead:
+   under the buttons, bleeding into the hairline that closes the section.
+   Below rather than above deliberately — a band above the type would push the
+   primary call to action off a 667px screen, and the hero's job is that
+   button.
+
+   Note that the breakpoint between those two treatments (80rem, below) is NOT
+   the breakpoint HeroVideo.tsx picks a file at (48rem). They answer different
+   questions. The file is chosen on whether the viewport is portrait or
+   landscape, because that is what decides which footage crops well; the mask
+   is chosen on whether the text column has stopped filling the page, which
+   happens much later. A 1024px laptop gets the landscape file in a band.
+   ========================================================================== */
+
+/* The band's clearance, reserved before the first paint.
+ *
+ * `data-hero` is stamped on <html> by the pre-paint script in lib/theme.ts,
+ * which is the only place that can know whether there will be a video in time
+ * for the first frame. Reduced motion and Data Saver both mean there will not
+ * be one, and then this padding is just a 320px hole under the buttons — so it
+ * is only applied when something is coming to fill it. Deciding it in React
+ * instead would paint the hole and then close it, which is a 320px layout
+ * shift on the homepage.
+ *
+ * 20rem against the 300px the mask reaches: see the band's own note below.
+ * Above 80rem the mask goes sideways and `lg:py-40` is already correct, so
+ * this stops rather than fighting it. */
+@media (width < 80rem) {
+  :root[data-hero='video'] .hero-copy {
+    padding-block-end: 20rem;
+  }
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  /* Fades in when the first frame is actually on screen (HeroVideo.tsx sets
+     data-ready off the `playing` event). Until then — and permanently, if
+     autoplay was refused — the hero is the ground and lattice it was before
+     any of this existed. */
+  opacity: 0;
+  transition: opacity 900ms var(--ease-institutional);
+
+  /* Phone: a band rising off the bottom edge. Measured in pixels from that
+     edge rather than in percentages of the section, because what the mask has
+     to clear is the buttons, and their distance from the bottom edge is a
+     fixed 320px of padding (`pb-80` on the hero) no matter how the headline
+     wraps or which script it is set in. 300px of reach against 320px of
+     padding leaves the type untouched by construction. */
+  mask-image: linear-gradient(to top, #000 0, #000 140px, transparent 300px);
+}
+
+.hero-media[data-ready] {
+  opacity: 1;
+}
+
+.hero-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Pulled back towards limestone and ink. Full-saturation footage beside one
+     ceremonial maroon reads as a second accent competing with it, and the
+     accent is supposed to be the only saturated thing on the page.
+     `object-position` is the knob for aiming the crop if the footage is
+     recut — the phone band shows the bottom third of a cover-fitted frame. */
+  filter: saturate(0.62) contrast(1.03);
+}
+
+/* The veil, in the page's own ground colour, so the footage sits inside the
+   palette instead of on top of it. Inside .hero-media, so it is masked with
+   the video and stops exactly where the video stops; under .lattice, so the
+   mashrabiya hairlines read across the footage rather than through a film. */
+.hero-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-ground);
+  opacity: var(--hero-veil);
+}
+
+/* 80rem, not the 48rem `md:` this originally used, and the number is measured
+   rather than chosen. A field beside the text needs the text to leave room
+   beside it, and the block that decides that is the headline: `max-w-[18ch]`
+   against a display-1 that clamps with the viewport. Its longest line ends at
+   — measuring the glyph rects, not the block box —
+
+     768px   74.5%      1280px  57.7%
+     1024px  64.1%      1440px  56.3%
+                        1920px  54.7%
+
+   It asymptotes near 55% because the container stops growing at 80rem and the
+   gutters absorb the rest, so there is never more than ~45% of the viewport
+   free. Below 1280px there is not even that: at the old 768px breakpoint the
+   lede ran to 84.9% of the width, straight across the middle of the field at
+   full mask alpha. No gradient tuning fixes that — the layout is simply wrong
+   at that size, and the band below the type is the right one until the text
+   column stops filling the page. */
+@media (width >= 80rem) {
+  .hero-media {
+    /* An ellipse pinned to the inline-end edge, transparent by 36% of its
+       105% horizontal radius — 62% across the section, clear of the 57.7%
+       worst case above by about 58px at 1280px and more at every larger
+       width.
+
+       The vertical radius is the loose one — 145% against the section's own
+       height, centred above the middle, so the field reaches the top corner
+       under the header and still bleeds into the hairline that closes the
+       section. At 125% it stopped about 70px short of that rule, which read
+       as the video running out rather than as a decision. Growing it costs
+       nothing on the horizontal axis: an ellipse is narrower the further it
+       is from its own centre line, so the text column only gets safer. */
+    mask-image: radial-gradient(
+      105% 145% at var(--hero-origin-x, 100%) 42%,
+      #000 0%,
+      transparent 36%
+    );
+  }
+}
+
+/* Mirrored the way the lattice is. The field belongs on the side the reading
+   direction ends on, which is the left in Arabic — and it has to move, or it
+   would be sitting on top of the Arabic text column. */
+:lang(ar) .hero-media {
+  --hero-origin-x: 0%;
+}
+
+/* =============================================================================
    Theme control
 
    Which icon and which label the theme button shows is decided here, from the
@@ -822,4 +980,38 @@
   .splash {
     display: none;
   }
+}
+
+/* =============================================================================
+   Wordmark
+
+   The supplied logo is drawn in near-white with grey fold shading: every
+   opaque pixel in it measures between 165 and 255 luminance, mean 230. It was
+   made for a dark ground, and on the bone page it is 1.2:1 at that mean and
+   2.4:1 at its single darkest pixel — which is to say invisible.
+
+   Inverting it in the light theme puts the same ribbon in ink. The fold
+   geometry is untouched; only the tonal direction of the shading reverses,
+   and a folded ribbon reads correctly lit from either side. Alpha is not
+   affected by `invert()`, so the transparent margin stays transparent.
+
+   This is a correction, not a design decision. The day a dark-on-light master
+   arrives, delete this block and the `wordmark-img` class with it.
+   ========================================================================== */
+
+.wordmark-img {
+  filter: invert(1);
+}
+
+/* Dark ground: the artwork is already right, so leave it alone. Declared
+   twice for the same reason the palette is — a media query and an attribute
+   cannot be combined in one selector. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .wordmark-img {
+    filter: none;
+  }
+}
+
+:root[data-theme='dark'] .wordmark-img {
+  filter: none;
 }
