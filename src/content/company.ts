@@ -21,10 +21,13 @@ interface CompanyRecord {
     zone: string;
     street: string;
     building: string;
+    floor: string;
+    office: string;
     place: L;
     city: L;
     country: L;
     countryCode: string;
+    mapUrl: string;
     status: Status;
   };
   hours: { opens: string; closes: string; days: string[]; status: Status };
@@ -44,13 +47,16 @@ export const company: CompanyRecord = {
   domain: 'ynwas.com',
 
   address: {
-    zone: '39',
-    street: '840',
-    building: '78',
-    place: { en: 'HUB Business Center', ar: 'مركز هَب للأعمال' },
+    zone: '17',
+    street: '930',
+    building: '04',
+    floor: '1',
+    office: '03',
+    place: { en: 'Transworld Tower 1', ar: 'برج ترانس وورلد 1' },
     city: { en: 'Doha', ar: 'الدوحة' },
     country: { en: 'Qatar', ar: 'قطر' },
     countryCode: 'QA',
+    mapUrl: 'https://www.google.com/maps?q=25.28667640686035,51.54713439941406&z=17&hl=en',
     status: 'derived',
   },
 
@@ -117,8 +123,8 @@ export const company: CompanyRecord = {
 export function formatAddress(locale: 'en' | 'ar'): string {
   const a = company.address;
   return locale === 'ar'
-    ? `${a.place.ar}، مبنى ${a.building}، شارع ${a.street}، منطقة ${a.zone}، ${a.city.ar}، ${a.country.ar}`
-    : `${a.place.en}, Building ${a.building}, Street ${a.street}, Zone ${a.zone}, ${a.city.en}, ${a.country.en}`;
+    ? `${a.place.ar}، مبنى ${a.building}، طابق ${a.floor}، مكتب ${a.office}، شارع ${a.street}، منطقة ${a.zone}، ${a.city.ar}، ${a.country.ar}`
+    : `${a.place.en}, Zone ${a.zone}, Street ${a.street}, Building ${a.building}, Floor ${a.floor}, Office No ${a.office}, ${a.city.en}, ${a.country.en}`;
 }
 
 export function channel(kind: ContactChannel['kind']): ContactChannel | undefined {

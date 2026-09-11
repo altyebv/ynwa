@@ -23,9 +23,14 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
             <Logo />
-            <p className="mt-4 max-w-[30ch] type-small text-fg-60">
+            <a
+              href={company.address.mapUrl}
+              rel="noreferrer noopener"
+              target="_blank"
+              className="mt-4 block max-w-[30ch] type-small text-fg-60 transition-colors duration-200 hover:text-fg"
+            >
               {formatAddress(locale)}
-            </p>
+            </a>
             {instagram && (
               <a
                 href={instagram.value}

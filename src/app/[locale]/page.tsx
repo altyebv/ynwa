@@ -5,6 +5,7 @@ import { ButtonLink } from '@/components/ui/Button';
 import { Chevron } from '@/components/ui/Chevron';
 import { StatusMarker } from '@/components/dev/StatusMarker';
 import { ClosingCta } from '@/components/layout/ClosingCta';
+import { HeroVideo } from '@/components/layout/HeroVideo';
 import { serviceCategories } from '@/content/navigation';
 import { Link } from '@/i18n/navigation';
 import { publishableOnly } from '@/content/types';
@@ -44,10 +45,23 @@ function Home({ locale }: { locale: Locale }) {
 
   return (
     <>
-      {/* ---- hero ------------------------------------------------------- */}
+      {/* ---- hero -------------------------------------------------------
+          Three layers, in paint order: the footage, the lattice across it,
+          then the type. HeroVideo decides whether there is any footage at all
+          — reduced motion, a metered connection and a refused autoplay all
+          resolve to nothing rendered — so everything below has to stand on
+          its own, and does: this is the hero it was before the video existed.
+
+          The padding below is the hero's own, for a hero with no video in it.
+          The extra 320px the band needs to clear the buttons is added by
+          `hero-copy` in globals.css, and only for a visitor who is actually
+          getting footage — it is keyed off an attribute the pre-paint script
+          sets, so the space is right in the first frame rather than appearing
+          a moment after hydration. ---------------------------------------- */}
       <section className="relative overflow-hidden border-b border-edge">
+        <HeroVideo />
         <div className="lattice" aria-hidden="true" />
-        <Container className="relative py-24 md:py-32 lg:py-40">
+        <Container className="hero-copy relative py-24 md:py-32 lg:py-40">
           <p className="type-eyebrow text-detail-text">{t('eyebrow')}</p>
           <h1 className="mt-6 max-w-[18ch] type-display-1">{t('headline')}</h1>
           <p className="mt-7 max-w-[54ch] type-lede">{t('lede')}</p>
